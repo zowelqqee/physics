@@ -1,0 +1,2021 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Подготовка к первому коллоквиуму по механике (Агапьев, ФизМех, осень 2026): §1–§29, формулы, выводы у доски, вероятные вопросы и интерактивные схемы.">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>Коллоквиум 1 по механике</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: тетрадный лист — оглавление-полоса слева, параграфы как отдельные листы; красная ручка = «у доски» */
+:root {
+  --paper: #f4f6f9;
+  --sheet: #ffffff;
+  --ink: #172033;
+  --muted: #586378;
+  --rule: #d8dee8;
+  --accent: #2448a6;
+  --accent-soft: #e6ecfa;
+  --pen: #b3261e;
+  --pen-soft: #fbeceb;
+  --done: #1f7a4d;
+  --sun: #d48a0c;
+  --f-display: "Unbounded", "Golos Text", system-ui, sans-serif;
+  --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f131b; --sheet: #161b26; --ink: #e5e9f1; --muted: #9ba6b9; --rule: #283043;
+    --accent: #93abff; --accent-soft: #1d2640; --pen: #ff8f86; --pen-soft: #33201f; --done: #6fd3a0;
+    --sun: #ffc04a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f131b; --sheet: #161b26; --ink: #e5e9f1; --muted: #9ba6b9; --rule: #283043;
+  --accent: #93abff; --accent-soft: #1d2640; --pen: #ff8f86; --pen-soft: #33201f; --done: #6fd3a0;
+  --sun: #ffc04a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.15; letter-spacing: -0.01em; }
+h2 { font-family: var(--f-display); font-weight: 500; font-size: 1.25rem; line-height: 1.25; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+h4 { margin: 0; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+p, ul, ol { margin: 0; }
+ul, ol { padding-left: 1.25em; display: grid; gap: 4px; }
+.mono { font-family: var(--f-mono); font-size: .82rem; }
+.muted { color: var(--muted); }
+
+/* шапка */
+.hero { display: grid; gap: 14px; max-width: 72ch; }
+.eyebrow { font-family: var(--f-mono); font-size: .8rem; color: var(--accent); letter-spacing: .04em; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.fact { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; min-width: 0; }
+.fact b { font-size: 1.05rem; }
+.fact span { color: var(--muted); font-size: .92rem; }
+
+.note { border-left: 3px solid var(--pen); background: var(--pen-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; display: grid; gap: 6px; max-width: 80ch; }
+
+/* «сначала выучить» */
+.first { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 20px; display: grid; gap: 14px; }
+.first ol { columns: 2 320px; column-gap: 32px; display: block; }
+.first li { break-inside: avoid; margin-bottom: 8px; }
+
+/* основная сетка */
+.body { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 28px; align-items: start; }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); display: grid; gap: 14px; max-height: calc(100vh - 32px); overflow-y: auto; padding-right: 4px; }
+.toc-group { display: grid; gap: 2px; }
+.toc-group > span { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
+.toc a { color: var(--ink); text-decoration: none; font-size: .88rem; padding: 2px 6px; border-radius: 5px; display: flex; gap: 6px; align-items: baseline; }
+.toc a:hover, .toc a:focus-visible { background: var(--accent-soft); outline: none; }
+.toc a .n { font-family: var(--f-mono); font-size: .76rem; color: var(--accent); min-width: 2.4em; }
+.toc a.is-done { color: var(--muted); text-decoration: line-through; }
+.progress { font-size: .85rem; color: var(--muted); }
+.progress b { color: var(--done); }
+
+main { display: grid; gap: 36px; min-width: 0; }
+.block { display: grid; gap: 16px; }
+.block > header { display: grid; gap: 4px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+
+article.par { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 20px 22px; display: grid; gap: 14px; min-width: 0; scroll-margin-top: 16px; }
+article.par > header { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; }
+.pnum { font-family: var(--f-display); font-weight: 700; color: var(--accent); font-size: 1.15rem; }
+.pages { font-family: var(--f-mono); font-size: .78rem; color: var(--muted); }
+.flag { font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--pen-soft); color: var(--pen); }
+.check { margin-left: auto; display: inline-flex; gap: 6px; align-items: center; font-size: .85rem; color: var(--muted); cursor: pointer; user-select: none; }
+.check input { width: 18px; height: 18px; accent-color: var(--done); cursor: pointer; }
+article.par.is-done { opacity: .72; }
+
+.ask { font-size: 1rem; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 24px; }
+.grid2 > div { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.board { border-left: 3px solid var(--pen); padding-left: 14px; display: grid; gap: 6px; }
+.board h4 { color: var(--pen); }
+.formulas { display: grid; gap: 4px; overflow-x: auto; }
+.qs li::marker { color: var(--accent); }
+.src { font-size: .85rem; color: var(--muted); }
+mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+mjx-container[display="true"] { margin: .35em 0 !important; }
+
+table { border-collapse: collapse; font-size: .9rem; }
+th, td { border-bottom: 1px solid var(--rule); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: .8rem; }
+.tablewrap { overflow-x: auto; }
+
+footer { color: var(--muted); font-size: .88rem; max-width: 80ch; display: grid; gap: 6px; }
+
+/* схемы */
+figure.fig { margin: 0; display: grid; gap: 10px; background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; min-width: 0; }
+.fig > svg { width: 100%; height: auto; display: block; }
+.fig > svg.sq { max-width: 400px; margin-inline: auto; }
+.fig figcaption { font-size: .88rem; color: var(--muted); }
+.fig-tag { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font-size: .92rem; }
+.controls label { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.controls input[type="range"] { accent-color: var(--accent); width: 170px; max-width: 55vw; }
+.readout { font-family: var(--f-mono); font-size: .84rem; line-height: 1.5; background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; }
+.btn { font: inherit; font-size: .88rem; padding: 5px 14px; border-radius: 7px; border: 1px solid var(--accent); background: var(--sheet); color: var(--accent); cursor: pointer; }
+.btn:focus-visible, .controls input:focus-visible, .check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fig > svg text { font-family: var(--f-body); font-size: 15px; fill: var(--ink); }
+.fig > svg text.t-small { font-size: 13px; fill: var(--muted); }
+.s-ax { stroke: var(--muted); stroke-width: 1.2; fill: none; }
+.s-grid { stroke: var(--rule); stroke-width: 1; fill: none; }
+.s-rule { stroke: var(--rule); stroke-width: 1; }
+.s-main { stroke: var(--accent); stroke-width: 2.5; fill: none; }
+.s-main-thin { stroke: var(--accent); stroke-width: 1.5; }
+.s-pen { stroke: var(--pen); stroke-width: 2.5; fill: none; }
+.s-ink { stroke: var(--ink); stroke-width: 2; fill: none; }
+.s-field { stroke: var(--accent); stroke-width: 1.4; fill: none; opacity: .6; }
+.s-dash { stroke-dasharray: 6 5; }
+.s-thin { stroke-width: 1.4; }
+.s-thick { stroke-width: 5; stroke-linecap: round; }
+.f-soft { fill: var(--accent-soft); }
+.f-pen-soft { fill: var(--pen-soft); }
+.f-none { fill: transparent; }
+.f-ink { fill: var(--ink); }
+.f-muted { fill: var(--muted); }
+.f-accent { fill: var(--accent); }
+.f-pen { fill: var(--pen); }
+.f-sun { fill: var(--sun); }
+.fig > svg text.f-accent { fill: var(--accent); }
+.fig > svg text.f-pen { fill: var(--pen); }
+
+@media (max-width: 880px) {
+  .body { grid-template-columns: minmax(0, 1fr); }
+  nav.toc { position: static; max-height: none; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg-full.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="ah-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="f-accent"/></marker>
+    <marker id="ah-pen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="f-pen"/></marker>
+    <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="f-ink"/></marker>
+    <marker id="ah-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="f-muted"/></marker>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<section class="hero">
+  <div class="eyebrow">Физика · Механика · Агапьев Б.Д. · ФизМех, 1 курс, осень 2026</div>
+  <h1>Первый коллоквиум: что от тебя будут хотеть</h1>
+  <p>Коллоквиум стоит в плане на <b>23 октября</b> (лекция 16) и идёт «по пройденному материалу», то есть по лекциям 1–15: это <b>§1–§29</b> книжки Агапьевых «Лекции по физике. Механика». Ниже по каждому параграфу: что спросят, какие формулы знать и что выводить у доски. Это собрано по самой книжке, страница за страницей. К каждому параграфу есть схема. Многие можно двигать ползунками: так проще понять, что меняет каждая буква в формуле.</p>
+</section>
+
+<div class="facts">
+  <div class="fact"><b>2–3 вопроса</b><span>Так сказано в плане. В книжке: один параграф = один вопрос билета. Значит, вопрос звучит как название параграфа.</span></div>
+  <div class="fact"><b>Скорее письменно</b><span>В плане: «если коллоквиум написан, оценка за него может быть учтена на экзамене».</span></div>
+  <div class="fact"><b>Дата может сдвинуться</b><span>«Может быть смещён в соответствии со степенью усвоения материала».</span></div>
+  <div class="fact"><b>В тот же день — контрольная</b><span>На практике в строке 23.10 стоит контрольная на 2 часа: 3 задачи из Иродова, зачёт по 2,5 задачам.</span></div>
+</div>
+
+<div class="note">
+  <b>Что важно знать о книжке</b>
+  <ul>
+    <li>Пометок «Поплавок» (вопросы для самостоятельного изучения, которые можно заменить) в §1–§29 <b>нет</b>. Готовить надо всё.</li>
+    <li>§27 «Орбиты планет» автор пометил: «при недостатке времени лекция может быть пропущена». Если на лекции его не было, скорее всего не спросят.</li>
+    <li>В твоём скане нет настоящей стр. 56: на её месте повтор стр. 40. Пропал конец §12 (вывод «работа консервативной силы по замкнутому пути = 0»). Он восстановлен здесь по логике.</li>
+    <li>Почти все итоговые формулы в книжке обведены рамкой. Автор считает главным именно их. Ниже они собраны в блоках «Формулы».</li>
+  </ul>
+</div>
+
+<section class="first">
+  <h2>Если времени мало, выучи сначала эти выводы</h2>
+  <p class="muted">Это места, где у автора длинная цепочка формул в рамках. Спрашивают обычно «выведите». Порядок — по курсу.</p>
+  <ol>
+    <li>Разложение ускорения на $a_\tau$ и $a_n=v^2/R$ через круг кривизны (§2)</li>
+    <li>$\vec v=\vec v_0+\vec v'+\vec\omega\times\vec r$ и формула ускорения с кориолисовым и центростремительным (§3–§4)</li>
+    <li>Уравнение движения в неИСО и четыре силы инерции, примеры (§5)</li>
+    <li>$\vec L=I_{zz}\vec\omega+\vec I_z\omega$, тензор инерции, симметричный волчок (§6)</li>
+    <li>Уравнение моментов $d\vec L/dt=\vec N$ (§7) и центр масс $\vec N_C=0$ (§8)</li>
+    <li>Моменты инерции стержня, кольца, диска; теорема Штейнера и трюк с $k=1/3$ (§9–§10)</li>
+    <li>Теорема о кинетической энергии и теорема Кёнига (§13–§14)</li>
+    <li>$A_{конс}=-\Delta U$, энергобаланс, ЗСЭ и два его условия (§15–§16)</li>
+    <li>$\vec F=-\nabla U$, $\mathrm{rot}\,\vec F=0$, пример $\vec F=a(x\vec e_x+2y\vec e_y)$ двумя способами (§17, §20)</li>
+    <li>ЗСЭ, ЗСИ, ЗСМИ из симметрий пространства-времени (§21–§24)</li>
+    <li>Эффективный потенциал и фокальный параметр (§26), уравнение орбиты через замену Бине (§27)</li>
+    <li>Три закона Кеплера (§28) и формула Резерфорда для комет (§29)</li>
+  </ol>
+</section>
+
+<div class="body">
+<nav class="toc" aria-label="Параграфы">
+  <div class="progress" id="progress">Отмечено: <b>0</b> из 30</div>
+  <div class="toc-group"><span>Кинематика</span>
+    <a href="#p1"><span class="n">§1</span>Кинематика точки</a>
+    <a href="#p2"><span class="n">§2</span>Ускорение</a>
+    <a href="#p3"><span class="n">§3</span>Скорости в движ. СО</a>
+    <a href="#p4"><span class="n">§4</span>Ускорения в движ. СО</a>
+    <a href="#p5"><span class="n">§5</span>НеИСО, силы инерции</a>
+  </div>
+  <div class="toc-group"><span>Твёрдое тело</span>
+    <a href="#p6"><span class="n">§6</span>Момент импульса</a>
+    <a href="#pD"><span class="n">доп</span>Криволин. координаты</a>
+    <a href="#p7"><span class="n">§7</span>Уравнение моментов</a>
+    <a href="#p8"><span class="n">§8</span>Центр масс</a>
+    <a href="#p9"><span class="n">§9</span>Моменты инерции</a>
+    <a href="#p10"><span class="n">§10</span>Теорема Штейнера</a>
+  </div>
+  <div class="toc-group"><span>Силы и энергия</span>
+    <a href="#p11"><span class="n">§11</span>Силы в природе</a>
+    <a href="#p12"><span class="n">§12</span>Сила и работа</a>
+    <a href="#p13"><span class="n">§13</span>Кинетическая энергия</a>
+    <a href="#p14"><span class="n">§14</span>Теорема Кёнига</a>
+    <a href="#p15"><span class="n">§15</span>Потенциальная энергия</a>
+    <a href="#p16"><span class="n">§16</span>Энергобаланс, ЗСЭ</a>
+  </div>
+  <div class="toc-group"><span>Векторный анализ</span>
+    <a href="#p17"><span class="n">§17</span>Сила и потенц. энергия</a>
+    <a href="#p18"><span class="n">§18</span>Дифф. операторы</a>
+    <a href="#p19"><span class="n">§19</span>Свойства набла</a>
+    <a href="#p20"><span class="n">§20</span>Конс. силы и U</a>
+  </div>
+  <div class="toc-group"><span>Симметрии</span>
+    <a href="#p21"><span class="n">§21</span>Законы и симметрии</a>
+    <a href="#p22"><span class="n">§22</span>Время → ЗСЭ</a>
+    <a href="#p23"><span class="n">§23</span>Пространство → ЗСИ</a>
+    <a href="#p24"><span class="n">§24</span>Изотропия → ЗСМИ</a>
+  </div>
+  <div class="toc-group"><span>Тяготение</span>
+    <a href="#p25"><span class="n">§25</span>Всемирное тяготение</a>
+    <a href="#p26"><span class="n">§26</span>Центробежный потенциал</a>
+    <a href="#p27"><span class="n">§27</span>Орбиты планет</a>
+    <a href="#p28"><span class="n">§28</span>Законы Кеплера</a>
+    <a href="#p29"><span class="n">§29</span>Отклонение комет</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ КИНЕМАТИКА ============ -->
+<section class="block">
+<header><h2>Кинематика</h2><span class="muted">Лекции 1–4, стр. 5–29</span></header>
+
+<article class="par" id="p1">
+  <header><span class="pnum">§1</span><h3>Кинематика материальной точки</h3><span class="pages">стр. 5–10</span>
+    <label class="check"><input type="checkbox" id="c-p1" data-k="p1">выучил</label></header>
+  <p class="ask">Определения и то, как из радиус-вектора получаются скорость и путь. Вывода тут мало, спросят формулировки.</p>
+  <div class="grid2">
+    <div><h4>Определения (как у автора)</h4>
+      <ul>
+        <li><b>Материальная точка</b> — тело, размерами которого можно пренебречь <i>в данных условиях</i> (мел и стол; Земля и Солнце).</li>
+        <li><b>Система отсчёта</b> — совокупность тел и часов для описания движения. Состав: часы, тело отсчёта, реперные тела, задающие оси и масштабы. <b>Не менее 4 тел.</b> Начало и оси образуют систему координат.</li>
+        <li><b>Траектория</b> — линия, описываемая точкой. <b>Путь</b> $S$ — длина траектории. <b>Перемещение</b> — вектор, соединяющий два положения.</li>
+        <li><b>Прямая задача</b>: по $\vec r(t)$ найти $\vec v(t)$. <b>Обратная</b>: по $\vec v(t)$ найти путь и перемещение.</li>
+      </ul></div>
+    <div><h4>Формулы</h4>
+      <div class="formulas">
+        $$\vec\ell=\vec r_2-\vec r_1=\Delta\vec r,\qquad S\ge|\vec\ell|,\qquad dS=|d\vec r|$$
+        $$\vec v=\lim_{\Delta t\to0}\frac{\Delta\vec r}{\Delta t}=\frac{d\vec r}{dt},\quad v_x=\dot x,\ v_y=\dot y,\ v_z=\dot z$$
+        $$v=\sqrt{\dot x^2+\dot y^2+\dot z^2}=\frac{dS}{dt}$$
+        $$S=\int_0^t v\,dt,\qquad \vec r=\vec r_0+\int_0^t\vec v\,dt$$
+      </div></div>
+  </div>
+  <div class="board"><h4>У доски</h4>
+    <p>Почему $S\ge\ell$ (неравенство треугольника) и почему при $\Delta t\to0$ дуга и хорда совпадают ($dS=|d\vec r|$, «спрямляемые» линии). Отсюда $v=dS/dt$, «путевая» скорость. Путь как площадь под графиком $v(t)$.</p>
+    <p class="src">Самостоятельная работа автора: доказать $\vec v=\vec v_0+\vec a t$, $\vec r=\vec r_0+\vec v_0t+\vec a t^2/2$ при $\vec a=\mathrm{const}$.</p></div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Что такое СО, из чего она состоит и почему тел не меньше четырёх?</li>
+    <li>Чем путь отличается от перемещения? Докажите $dS=|d\vec r|$.</li>
+    <li>Определите среднюю и мгновенную скорость, запишите проекции и модуль.</li>
+    <li>Как по $\vec v(t)$ найти путь и координату?</li></ul></div>
+</article>
+
+<article class="par" id="p2">
+  <header><span class="pnum">§2</span><h3>Ускорение материальной точки</h3><span class="pages">стр. 11–15</span>
+    <label class="check"><input type="checkbox" id="c-p2" data-k="p2">выучил</label></header>
+  <p class="ask">Главный вывод: полное ускорение = тангенциальное + нормальное, и почему $a_n=v^2/R$.</p>
+  <div class="grid2">
+    <div><h4>Определения</h4>
+      <ul>
+        <li><b>Ускорение</b> — изменение скорости за единицу времени: $\vec a=d\vec v/dt$.</li>
+        <li><b>Тангенциальный вектор</b> $\vec\tau=\vec v/v$, единичный вектор касательной.</li>
+        <li><b>Нормаль</b> $\vec n=d\vec\tau/|d\vec\tau|$.</li>
+        <li><b>Круг кривизны</b> — окружность, соприкасающаяся с траекторией на элементарном пути $dS$; у неё с траекторией бесконечно много общих точек на $dS$.</li>
+      </ul></div>
+    <div><h4>Формулы</h4>
+      <div class="formulas">
+        $$\vec v=\vec v_0+\int_0^t\vec a\,dt$$
+        $$\vec a=\frac{d(v\vec\tau)}{dt}=\frac{dv}{dt}\vec\tau+v\frac{d\vec\tau}{dt}=\vec a_\tau+\vec a_n$$
+        $$\vec a_n=\frac{v^2}{R}\vec n,\qquad a=\sqrt{\dot v^2+\left(\frac{v^2}{R}\right)^2}$$
+      </div></div>
+  </div>
+  <figure class="fig">
+    <span class="fig-tag">Схема</span>
+    <svg viewBox="0 0 520 330" role="img" aria-label="Траектория, круг кривизны и разложение ускорения на тангенциальное и нормальное">
+      <circle cx="260" cy="302" r="222" class="s-ax s-dash"/>
+      <path d="M60 170 Q260 -10 460 170" class="s-ink"/>
+      <line x1="260" y1="302" x2="67.7" y2="191" class="s-ax"/>
+      <text x="150" y="238" class="t-small">R</text>
+      <circle cx="260" cy="302" r="4" class="f-muted"/>
+      <text x="268" y="298" class="t-small">O — центр кривизны</text>
+      <line x1="370" y1="80" x2="370" y2="200" class="s-ax s-dash"/>
+      <line x1="260" y1="200" x2="370" y2="200" class="s-ax s-dash"/>
+      <line x1="260" y1="80" x2="368" y2="80" class="s-pen" marker-end="url(#ah-pen)"/>
+      <line x1="260" y1="80" x2="260" y2="198" class="s-pen" marker-end="url(#ah-pen)"/>
+      <line x1="260" y1="80" x2="368" y2="198" class="s-main" marker-end="url(#ah-accent)"/>
+      <circle cx="260" cy="80" r="5" class="f-ink"/>
+      <text x="242" y="68">M</text>
+      <text x="378" y="85" class="f-pen">a<tspan dy="4" font-size="12">τ</tspan><tspan dy="-4"> ∥ v</tspan></text>
+      <text x="206" y="214" class="f-pen">a<tspan dy="4" font-size="12">n</tspan><tspan dy="-4"> ∥ n</tspan></text>
+      <text x="378" y="214" class="f-accent">a</text>
+      <text x="26" y="196" class="t-small">траектория</text>
+      <text x="300" y="322" class="t-small">круг кривизны</text>
+    </svg>
+    <figcaption>В точке M круг кривизны прилегает к траектории. Тангенциальное ускорение идёт по касательной и меняет величину скорости, нормальное идёт к центру O и меняет направление: $a_n=v^2/R$. Синий вектор — их сумма.</figcaption>
+  </figure>
+  <div class="board"><h4>У доски — цепочка</h4>
+    <ol>
+      <li>$\vec v=v\vec\tau$, правило Лейбница $d(uv)=u\,dv+v\,du$ (автор выводит его через $\Delta(uv)$).</li>
+      <li>Получаем $\vec a_\tau=\dot v\,\vec\tau$ и $\vec a_n=v\,d\vec\tau/dt$.</li>
+      <li>$\vec\tau^2=1\Rightarrow 2\vec\tau\cdot d\vec\tau/dt=0$, значит $d\vec\tau\perp\vec\tau$ и $\vec a_\tau\perp\vec a_n$.</li>
+      <li>Круг кривизны: радиус и $\vec\tau$ поворачиваются на один угол $d\varphi$, $dS=R\,d\varphi$, $|d\vec\tau|=d\varphi=v\,dt/R$.</li>
+      <li>Подставляем: $\vec a_n=\dfrac{v^2}{R}\vec n$.</li>
+    </ol>
+    <p class="src">Самостоятельная: для $\vec v=v_0\vec e_x+a_0t\,\vec e_y$ найти $a_\tau$ и $a_n$. Ответ (не из книжки): $a_\tau=a_0^2t/v$, $a_n=a_0v_0/v$, где $v=\sqrt{v_0^2+a_0^2t^2}$.</p></div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Выведите разложение ускорения на тангенциальное и нормальное.</li>
+    <li>Докажите, что $\vec a_\tau\perp\vec a_n$.</li>
+    <li>Что такое круг кривизны? Выведите $a_n=v^2/R$.</li></ul></div>
+</article>
+
+<article class="par" id="p3">
+  <header><span class="pnum">§3</span><h3>Скорости в движущихся системах отсчёта</h3><span class="pages">стр. 16–20</span>
+    <label class="check"><input type="checkbox" id="c-p3" data-k="p3">выучил</label></header>
+  <p class="ask">Сложение скоростей Галилея, принцип относительности, скорость во вращающейся СО через векторное произведение.</p>
+  <div class="grid2">
+    <div><h4>Главное</h4>
+      <ul>
+        <li>Поступательное движение $K'$: $\vec r=\vec r_0+\vec r'$. При $t=t'$ (инвариантность времени) $\vec v=\vec v_0+\vec v'$, $\vec a=\vec a_0+\vec a'$.</li>
+        <li>В ИСО $\vec a_0=0\Rightarrow\vec a=\vec a'$: ускорение инвариантно.</li>
+        <li><b>Принцип относительности Галилея</b>: все механические явления протекают одинаково во всех ИСО. Он эквивалентен гипотезе $t=t'$.</li>
+        <li><b>Векторное произведение</b>: модуль $AB\sin\theta$ (площадь параллелограмма), направление по буравчику. Автор называет «правило левой руки»: пальцы вдоль $\vec A$, $\vec B$ входит в ладонь, большой палец — $\vec C$.</li>
+        <li>Вектор малого поворота $d\vec\varphi=\vec n\,d\varphi$; угловая скорость $\vec\omega=d\vec\varphi/dt$.</li>
+      </ul></div>
+    <div><h4>Формулы</h4>
+      <div class="formulas">
+        $$d\vec r_{вр}=d\vec\varphi\times\vec r,\qquad \vec v_{вр}=\vec\omega\times\vec r,\qquad v=\omega r\sin\theta=\omega R$$
+        $$d\vec b=d'\vec b+\vec\omega\times\vec b\,dt$$
+        $$\vec v=\vec v'+\vec\omega\times\vec r+\vec v_0$$
+      </div></div>
+  </div>
+  <div class="board"><h4>У доски</h4>
+    <p>Точка, неподвижная во вращающейся $K'$, идёт по окружности радиуса $R=r\sin\theta$: $|d\vec r|=r\sin\theta\,d\varphi$. Это и есть модуль $d\vec\varphi\times\vec r$. Дальше правило для любого вектора: полное изменение = собственное + вращательное. Для движущейся точки получаем $\vec v=\vec v'+\vec\omega\times\vec r$, в общем случае плюс $\vec v_0$.</p></div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Выведите правило Галилея сложения скоростей. Какое предположение о времени нужно?</li>
+    <li>Сформулируйте принцип относительности Галилея.</li>
+    <li>Выведите $\vec v=\vec\omega\times\vec r$. Как направлены $d\vec\varphi$ и $\vec\omega$?</li>
+    <li>Скорость точки в самом общем случае движения СО.</li></ul></div>
+</article>
+
+<article class="par" id="p4">
+  <header><span class="pnum">§4</span><h3>Ускорение в движущихся системах отсчёта</h3><span class="pages">стр. 21–24</span>
+    <label class="check"><input type="checkbox" id="c-p4" data-k="p4">выучил</label></header>
+  <p class="ask">Одна большая формула. Надо уметь её вывести и назвать каждое слагаемое.</p>
+  <div class="formulas">
+    $$\vec a=\vec a'+\vec\beta\times\vec r+2\vec\omega\times\vec v'+\vec\omega\times[\vec\omega\times\vec r]+\vec a_0$$
+  </div>
+  <div class="grid2">
+    <div><h4>Слагаемые</h4>
+      <ul>
+        <li>$\vec a'$ — собственное (относительное) ускорение в $K'$.</li>
+        <li>$\vec a_0$ — ускорение начала $K'$ (переносное). «Не путайте с $\vec a'$!»</li>
+        <li>$2\vec\omega\times\vec v'$ — <b>кориолисово</b>. Кориолис, 1835 г. Человек, идущий по карусели от оси, получает ускорение в сторону вращения.</li>
+        <li>$\vec\omega\times[\vec\omega\times\vec r]=-\omega^2\vec R$ — <b>центростремительное</b>, к оси.</li>
+        <li>$\vec\beta=d\vec\omega/dt$ — угловое ускорение.</li>
+      </ul></div>
+    <div class="board"><h4>У доски</h4>
+      <ol>
+        <li>Дифференцируем $\vec v=\vec v'+\vec\omega\times\vec r+\vec v_0$.</li>
+        <li>$\vec\omega$ и $\vec v_0$ меняются только «собственно»: дают $\vec\beta$ и $\vec a_0$.</li>
+        <li>$d\vec v'/dt=\vec a'+\vec\omega\times\vec v'$ и $\vec\omega\times d\vec r/dt=\vec\omega\times\vec v'+\vec\omega\times[\vec\omega\times\vec r]$. Два $\vec\omega\times\vec v'$ дают $2\vec\omega\times\vec v'$.</li>
+        <li>Центростремительное: $\vec r=\vec R+z\vec n$, правило «БАЦ минус ЦАБ» $\vec A\times[\vec B\times\vec C]=\vec B(\vec A\cdot\vec C)-\vec C(\vec A\cdot\vec B)$, получаем $-\omega^2\vec R$.</li>
+      </ol>
+      <p class="src">Самостоятельная автора — ровно этот вывод.</p></div>
+  </div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Выведите ускорение точки во вращающейся СО.</li>
+    <li>Назовите каждое слагаемое и его смысл.</li>
+    <li>Докажите, что $\vec\omega\times[\vec\omega\times\vec r]=-\omega^2\vec R$. Почему оно центростремительное?</li></ul></div>
+</article>
+
+<article class="par" id="p5">
+  <header><span class="pnum">§5</span><h3>Неинерциальные системы отсчёта, силы инерции</h3><span class="pages">стр. 25–29</span>
+    <label class="check"><input type="checkbox" id="c-p5" data-k="p5">выучил</label></header>
+  <p class="ask">Уравнение Ньютона в неИСО, четыре силы инерции с примерами, принцип эквивалентности.</p>
+  <div class="formulas">
+    $$m\vec a'=\vec F\underbrace{-m\vec a_0}_{пост}+\underbrace{2m\vec v'\times\vec\omega}_{Кориолиса}+\underbrace{m\omega^2\vec R}_{центробежная}+\underbrace{m\vec r\times\vec\beta}_{вращ}$$
+  </div>
+  <figure class="fig">
+    <span class="fig-tag">Анимация</span>
+    <svg id="fig-cor" viewBox="0 0 560 270" role="img" aria-label="Шарик катится от центра вращающегося диска: в лаборатории по прямой, на карусели по спирали"></svg>
+    <div class="controls"><button class="btn" id="cor-btn" type="button">Пауза</button></div>
+    <figcaption>Шарик катится от центра по прямой, а диск вращается против часовой стрелки. Слева так видит неподвижный наблюдатель: сил нет, шарик летит прямо. Справа так видит человек на карусели: шарик без всяких сил заворачивает по часовой стрелке. Первый закон Ньютона тут не выполняется, поэтому система карусели неинерциальная. Чтобы объяснить поворот, приходится вводить силу Кориолиса $2m\vec v'\times\vec\omega$ (стрелка «F кор»), она всегда перпендикулярна скорости. По той же причине реки северного полушария подмывают правый берег.</figcaption>
+  </figure>
+  <div class="grid2">
+    <div><h4>Силы инерции и примеры автора</h4>
+      <ul>
+        <li><b>Поступательная</b> $-m\vec a_0$: трамвай тормозит, нас толкает вперёд.</li>
+        <li><b>Центробежная</b> $m\omega^2\vec R$: карусель отбрасывает от оси.</li>
+        <li><b>Вращательная</b> $m\vec r\times\vec\beta$: мешает изменению угловой скорости.</li>
+        <li><b>Кориолиса</b> $2m\vec v'\times\vec\omega$: в северном полушарии реки подмывают <b>правый</b> берег (Волга течёт на юг — западный; Енисей, Лена на север — восточный); в южном — левый (Парана). Ракеты пускают с экватора на восток: $a_{цб}\approx0{,}3\%\,g$, а $a_{кор}\approx2v'\omega\approx10\%\,g$.</li>
+      </ul></div>
+    <div><h4>Итоги (автор их перечисляет)</h4>
+      <ol>
+        <li>Силы инерции есть только в неИСО.</li>
+        <li>Они пропорциональны массе, как сила тяжести.</li>
+        <li><b>Принцип эквивалентности</b>: $m_{грав}=m_{инерт}$. У Эйнштейна: однородное поле сил инерции неотличимо от однородного поля тяжести.</li>
+        <li><b>Принцип Маха</b>: силы инерции — нескомпенсированное гравитационное взаимодействие со всеми телами Вселенной.</li>
+        <li>Проверки равенства масс: Этвеш (крутильные весы), Дикке ($10^{-11}$), Брагинский и Панов (МГУ, 1972), спутник Microscope (2017).</li>
+      </ol></div>
+  </div>
+  <p class="src">Самостоятельные: момент силы Кориолиса относительно оси для тела, идущего на юг по меридиану на широте $\psi$; зависимость $g$ от широты («с подвохом»: центробежная сила).</p>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Выведите уравнение движения во вращающейся неИСО и перечислите силы инерции.</li>
+    <li>Объясните подмыв берегов рек и запуск ракет с экватора.</li>
+    <li>Принцип эквивалентности и принцип Маха.</li></ul></div>
+</article>
+</section>
+
+<!-- ============ ТВЁРДОЕ ТЕЛО ============ -->
+<section class="block">
+<header><h2>Момент импульса и твёрдое тело</h2><span class="muted">Лекции 5–7, стр. 30–48</span></header>
+
+<article class="par" id="p6">
+  <header><span class="pnum">§6</span><h3>Момент импульса, момент инерции</h3><span class="pages">стр. 30–33</span>
+    <label class="check"><input type="checkbox" id="c-p6" data-k="p6">выучил</label></header>
+  <p class="ask">Вывод момента импульса вращающегося тела, осевой и центробежный моменты, тензор инерции, симметричный волчок.</p>
+  <div class="grid2">
+    <div><h4>Формулы</h4>
+      <div class="formulas">
+        $$\vec L=\vec r\times\vec p,\qquad \vec r=\vec r\,'+\vec d\ \Rightarrow\ \vec L=\vec L'+\vec d\times\vec p$$
+        $$\vec L=\vec\omega\int R^2dm-\omega\int z\vec R\,dm=I_{zz}\vec\omega+\vec I_z\,\omega$$
+        $$I_{zz}=\int R^2dm,\qquad \vec I_z=-\int z\vec R\,dm$$
+        $$L_k=\sum_n I_{kn}\omega_n,\qquad \text{симм. волчок: } \vec L=I\vec\omega$$
+      </div></div>
+    <div class="board"><h4>У доски — цепочка</h4>
+      <ol>
+        <li>$d\vec L=\vec r\times\vec v\,dm$, $\vec v=\vec\omega\times\vec r$, $\vec r=\vec R+z\vec n$.</li>
+        <li>Раскрываем двойное векторное произведение: $d\vec L=\vec\omega R^2dm-\omega z\vec R\,dm$.</li>
+        <li>Первое слагаемое — вдоль оси (<b>осевой</b> момент), второе — перпендикулярно (<b>центробежный</b>).</li>
+        <li>В произвольных осях — матрица $I_{kn}$, <b>тензор второго ранга</b>, симметричный. Поворотом осей приводится к диагональному виду: <b>главные оси</b> и <b>главные моменты</b>.</li>
+        <li>У симметричного волчка каждой точке $\vec R$ соответствует $-\vec R$, поэтому $\vec I_z=0$ и $\vec L\parallel\vec\omega$.</li>
+      </ol></div>
+  </div>
+  <p class="src">Самостоятельная: доказать $I_{ik}=I_{ki}$.</p>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Определение момента импульса; как он меняется при сдвиге начала отсчёта?</li>
+    <li>Выведите $\vec L$ твёрдого тела. Осевой и центробежный моменты инерции.</li>
+    <li>Тензор инерции, главные оси. Почему у волчка $\vec L=I\vec\omega$?</li></ul></div>
+</article>
+
+<article class="par" id="pD">
+  <header><span class="pnum">доп.</span><h3>Объёмы и площади в криволинейных координатах</h3><span class="pages">стр. 34–36</span>
+    <label class="check"><input type="checkbox" id="c-pD" data-k="pD">выучил</label></header>
+  <p class="ask">Это «формулы для справок», отдельным вопросом вряд ли будет. Но они нужны для §9 (диск, сфера, шар).</p>
+  <div class="formulas">
+    $$\text{цилиндр.: } dS_z=R\,d\alpha\,dR,\quad dV=R\,d\alpha\,dR\,dz$$
+    $$\text{сфер.: } d\ell^2=dr^2+r^2d\theta^2+r^2\sin^2\theta\,d\alpha^2,\quad dS_r=r^2\sin\theta\,d\theta\,d\alpha,\quad dV=r^2\sin\theta\,dr\,d\theta\,d\alpha$$
+  </div>
+  <p class="src">$g_{rr}=1$, $g_{\theta\theta}=r^2$, $g_{\alpha\alpha}=r^2\sin^2\theta$ — метрические коэффициенты; правило Эйнштейна (сумма по повторяющимся индексам). Самостоятельные: проверить $\pi R^2$, $4\pi R^2$, $\tfrac43\pi R^3$.</p>
+</article>
+
+<article class="par" id="p7">
+  <header><span class="pnum">§7</span><h3>Уравнение моментов</h3><span class="pages">стр. 37–39</span>
+    <label class="check"><input type="checkbox" id="c-p7" data-k="p7">выучил</label></header>
+  <p class="ask">Вывести $d\vec L/dt=\vec N$ из второго закона Ньютона, определить момент силы и плечо.</p>
+  <div class="grid2">
+    <div class="board"><h4>У доски</h4>
+      <ol>
+        <li>$\vec L=\int\vec r\times\vec v\,dm$.</li>
+        <li>$\dfrac{d\vec L}{dt}=\int\vec r\times\vec a\,dm$ (слагаемое $\vec v\times\vec v=0$).</li>
+        <li>$\vec a\,dm=d\vec F$, получаем $\dfrac{d\vec L}{dt}=\int\vec r\times d\vec F=\vec N$.</li>
+        <li>Для симметричного тела $I\,\dfrac{d\vec\omega}{dt}=\vec N$ — аналог второго закона Ньютона.</li>
+      </ol></div>
+    <div><h4>Определения</h4>
+      <ul>
+        <li><b>Момент силы</b> — сила на плечо: $dN=\ell\,dF=r\sin\theta\,dF$, вектор $d\vec N=\vec r\times d\vec F$.</li>
+        <li><b>Плечо</b> — кратчайшее расстояние от оси до линии действия силы, $\ell=r\sin\theta$.</li>
+        <li>Направление — по буравчику (у автора — правило левой руки).</li>
+        <li>Для сосредоточенной силы $N_z=\pm F\ell$.</li>
+      </ul></div>
+  </div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Выведите уравнение моментов.</li>
+    <li>Что такое момент силы и плечо?</li>
+    <li>Когда справедливо $I\dot{\vec\omega}=\vec N$?</li></ul></div>
+</article>
+
+<article class="par" id="p8">
+  <header><span class="pnum">§8</span><h3>Центр масс</h3><span class="pages">стр. 39–41</span>
+    <label class="check"><input type="checkbox" id="c-p8" data-k="p8">выучил</label></header>
+  <p class="ask">Определение центра масс через момент силы тяжести и его физический смысл. Отличие от центра тяжести.</p>
+  <div class="grid2">
+    <div><h4>Формулы</h4>
+      <div class="formulas">
+        $$\vec R_C=\frac{\int\vec r\,dm}{m}=\overrightarrow{OC}$$
+        $$\vec N=\int\vec r\times\vec g\,dm=\vec R_C\times m\vec g,\qquad \vec N_C=0$$
+      </div>
+      <p><b>Смысл</b> (выделен автором): центр масс — точка, относительно которой момент сил однородного поля равен нулю.</p></div>
+    <div><h4>Центр тяжести</h4>
+      <p><b>Центр тяжести</b> — точка приложения равнодействующей сил тяжести. Совпадает с центром масс только в однородном поле. Пример автора: Курская магнитная аномалия. Там тяжёлые породы (около 5 т/м³ против 3 т/м³), $g$ больше и меняется вдоль поверхности. У моста центр тяжести сместится к берегу, где $g$ больше.</p></div>
+  </div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Определите центр масс; докажите, что $\vec N_C=0$.</li>
+    <li>Чем центр тяжести отличается от центра масс? Пример.</li></ul></div>
+</article>
+
+<article class="par" id="p9">
+  <header><span class="pnum">§9</span><h3>Вычисление моментов инерции</h3><span class="pages">стр. 42–45</span>
+    <label class="check"><input type="checkbox" id="c-p9" data-k="p9">выучил</label></header>
+  <p class="ask">Выводы для стержня, кольца и сплошного цилиндра. Сферу и шар — знать ответы.</p>
+  <div class="grid2">
+    <div class="board"><h4>У доски</h4>
+      <ul>
+        <li><b>Стержень от конца</b>: $dm=\frac m\ell dx$, $I=\int_0^\ell x^2\frac m\ell dx=\frac{m\ell^2}{3}$.</li>
+        <li><b>Кольцо</b>: все $dm$ на расстоянии $R$: $I=mR^2$.</li>
+        <li><b>Цилиндр (диск)</b>, шаги А–Е автора: масса на единицу площади дна $m/\pi R^2$; трубка радиуса $r$ толщины $dr$ имеет основание $2\pi r\,dr$; $dm=\frac{2mr\,dr}{R^2}$; $dI=r^2dm$; $I=\frac{2m}{R^2}\int_0^R r^3dr=\frac{mR^2}{2}$.</li>
+      </ul></div>
+    <div><h4>Таблица (для справок)</h4>
+      <div class="tablewrap"><table>
+        <tr><th>Тело</th><th>Ось через центр</th></tr>
+        <tr><td>Кольцо, тонкая трубка</td><td>$mR^2$</td></tr>
+        <tr><td>Диск, цилиндр</td><td>$mR^2/2$</td></tr>
+        <tr><td>Сфера</td><td>$\tfrac23mR^2$ (без вывода)</td></tr>
+        <tr><td>Шар</td><td>$\tfrac25mR^2$ (без вывода)</td></tr>
+        <tr><td>Стержень</td><td>$m\ell^2/12$; от конца $m\ell^2/3$</td></tr>
+      </table></div>
+      <p class="src">Сферу считают кольцами $r=R\sin\theta$, шар — дисками.</p></div>
+  </div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Выведите момент инерции стержня относительно конца.</li>
+    <li>Выведите момент инерции диска.</li>
+    <li>Чему равны моменты сферы и шара?</li></ul></div>
+</article>
+
+<article class="par" id="p10">
+  <header><span class="pnum">§10</span><h3>Теорема Штейнера</h3><span class="pages">стр. 46–48</span>
+    <label class="check"><input type="checkbox" id="c-p10" data-k="p10">выучил</label></header>
+  <p class="ask">Доказательство теоремы и красивый вывод момента стержня без интегралов.</p>
+  <div class="formulas">$$I_O=I_C+ma^2$$</div>
+  <figure class="fig">
+    <span class="fig-tag">Схема</span>
+    <svg viewBox="0 0 520 200" role="img" aria-label="Стержень с двумя параллельными осями: через конец O и через центр масс C">
+      <line x1="60" y1="30" x2="60" y2="190" class="s-ink s-dash"/>
+      <line x1="260" y1="30" x2="260" y2="190" class="s-main s-dash"/>
+      <rect x="60" y="108" width="400" height="14" rx="3" class="f-soft s-main-thin"/>
+      <circle cx="260" cy="115" r="4" class="f-accent"/>
+      <text x="66" y="24">ось O</text>
+      <text x="266" y="24" class="f-accent">ось C (центр масс)</text>
+      <line x1="62" y1="70" x2="258" y2="70" class="s-pen" marker-start="url(#ah-pen)" marker-end="url(#ah-pen)"/>
+      <text x="160" y="62" text-anchor="middle" class="f-pen">a = ℓ/2</text>
+      <text x="160" y="100" text-anchor="middle" class="t-small">половина: m/2, ℓ/2</text>
+      <text x="360" y="100" text-anchor="middle" class="t-small">половина: m/2, ℓ/2</text>
+      <line x1="62" y1="150" x2="458" y2="150" class="s-ax" marker-start="url(#ah-muted)" marker-end="url(#ah-muted)"/>
+      <text x="260" y="172" text-anchor="middle" class="t-small">весь стержень: масса m, длина ℓ</text>
+    </svg>
+    <figcaption>Трюк автора: ось C — общий конец двух половинок, поэтому $I_C$ равен двум моментам половинок «от конца». Остаётся применить Штейнера с $a=\ell/2$ и решить уравнение на $k$.</figcaption>
+  </figure>
+  <div class="grid2">
+    <div class="board"><h4>Доказательство</h4>
+      <p>$\vec R_O=\vec R_C+\vec a$, тогда $I_O=\int(\vec R_C+\vec a)^2dm=\int R_C^2dm+2\vec a\cdot\int\vec R_C\,dm+a^2m$. Среднее слагаемое равно нулю: $\int\vec R_C\,dm/m=\overrightarrow{CC}=0$ (как у центра масс).</p></div>
+    <div class="board"><h4>Стержень через размерность</h4>
+      <p>$I_O=km\ell^2$. Центр стержня — общий конец двух половин: $I_C=2\cdot k\frac m2\left(\frac\ell2\right)^2$. По Штейнеру $km\ell^2=\frac k4m\ell^2+\frac14m\ell^2$, откуда $k=\frac13$. Значит $I_O=\frac{m\ell^2}{3}$, $I_C=\frac{m\ell^2}{12}$.</p></div>
+  </div>
+  <p class="src">Самостоятельные: момент инерции сферы через момент шара; вывести $\tfrac23mR^2$ для сферы.</p>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Сформулируйте и докажите теорему Штейнера.</li>
+    <li>Найдите момент стержня через Штейнера и размерность.</li></ul></div>
+</article>
+</section>
+
+<!-- ============ СИЛЫ И ЭНЕРГИЯ ============ -->
+<section class="block">
+<header><h2>Силы, работа, энергия</h2><span class="muted">Лекции 8–9, стр. 49–64</span></header>
+
+<article class="par" id="p11">
+  <header><span class="pnum">§11</span><h3>Силы в природе</h3><span class="pages">стр. 49–53</span>
+    <label class="check"><input type="checkbox" id="c-p11" data-k="p11">выучил</label></header>
+  <p class="ask">Описательный параграф без вывода: близкодействие, поле, четыре взаимодействия.</p>
+  <div class="grid2">
+    <div><h4>Главное</h4>
+      <ul>
+        <li><b>Дальнодействие или близкодействие.</b> При близкодействии должно быть запаздывание. Герц (1888) открыл электромагнитные волны ($c=300\,000$ км/с) и тем подтвердил принцип близкодействия.</li>
+        <li><b>Принцип близкодействия</b>: взаимодействие только при контакте; на расстоянии его передаёт <b>силовое поле</b> — вид материи. Не путать с математическим «полем» как набором сил в точках.</li>
+        <li>Силовые характеристики (сила, напряжённость) определяют изменение движения и деформацию. Энергетические (потенциальная энергия, потенциал) — способность совершать работу.</li>
+        <li><b>Суперпозиция</b>: для ЭМ выполняется (фотон не заряжен); для гравитации — на больших расстояниях; для глюонов — нет.</li>
+        <li>Формула Юкавы (1934): $W\sim e^{-r/R}/r$, $R=\hbar/mc$.</li>
+      </ul></div>
+    <div><h4>Таблица автора</h4>
+      <div class="tablewrap"><table>
+        <tr><th>Взаимодействие</th><th>Квант</th><th>Радиус</th><th>Масса</th></tr>
+        <tr><td>Сильное</td><td>π-мезон</td><td>1 Фм</td><td>140 МэВ</td></tr>
+        <tr><td>Слабое</td><td>W, Z-бозоны</td><td>0,002 Фм</td><td>80 / 90 ГэВ</td></tr>
+        <tr><td>ЭМ</td><td>фотон</td><td>∞</td><td>0</td></tr>
+        <tr><td>Гравит.</td><td>гравитон?</td><td>?</td><td>0?</td></tr>
+      </table></div>
+      <p class="src">Почему «сильное»: связь дейтерия ~2 МэВ против 13,6 эВ ионизации водорода. Почему «слабое»: пробег нейтрино 5 МэВ в воде ~100 световых лет. Блок про глюоны и конфайнмент автор пометил «не для запоминания».</p></div>
+  </div>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Дальнодействие и близкодействие. Что доказал Герц? Что такое силовое поле?</li>
+    <li>Четыре фундаментальных взаимодействия: переносчики, радиусы.</li>
+    <li>Для каких полей выполняется суперпозиция и почему?</li></ul></div>
+</article>
+
+<article class="par" id="p12">
+  <header><span class="pnum">§12</span><h3>Сила и работа</h3><span class="pages">стр. 54–55 (стр. 56 в скане нет)</span>
+    <label class="check"><input type="checkbox" id="c-p12" data-k="p12">выучил</label></header>
+  <p class="ask">Определение работы, криволинейный интеграл, консервативные силы.</p>
+  <div class="formulas">
+    $$\delta A=F_\ell\,d\ell=\vec F\cdot d\vec r=F_xdx+F_ydy+F_zdz,\qquad A_{12}=\int_1^2\vec F\cdot d\vec\ell$$
+  </div>
+  <ul>
+    <li>$\delta A$ — не обязательно дифференциал (дифференциальная форма), поэтому пишут $\delta A$, $d'A$.</li>
+    <li>Работа — <b>криволинейный интеграл</b>, может зависеть от формы пути.</li>
+    <li>Сила <b>консервативна</b>, если работа на любом пути $1\to2$ одинакова и зависит только от начальной и конечной точек. Если хоть для двух путей работы разные — неконсервативна.</li>
+    <li>На замкнутом пути $A=A'_{12}+A''_{21}=A'_{12}-A''_{12}=0$ для консервативной силы. Последний шаг был на пропавшей стр. 56.</li>
+  </ul>
+  <div><h4>Вероятные вопросы</h4><ul class="qs">
+    <li>Элементарная и полная работа. Почему $\delta A$, а не $dA$?</li>
+    <li>Консервативные и неконсервативные силы; работа по замкнутому пути.</li></ul></div>
+</article>
+
+<article class="par" id="p13">
+  <header><span class="pnum">§13</span><h3>Кинетическая энергия</h3><span class="pages">стр. 57</span>
+    <label class="check"><input type="checkbox" id="c-p13" data-k="p13">выучил</label></header>
+  <p class="ask">Короткий вывод теоремы о кинетической энергии.</p>
+  <div class="board"><h4>У доски</h4>
+    <p>$\delta A_{всех}=\vec F\cdot d\vec r=m\vec a\cdot\vec v\,dt=m\vec v\cdot d\vec v=d\!\left(\frac{mv^2}{2}\right)$, откуда $A_{всех\,12}=K_2-K_1$, $K=\frac{mv^2}{2}$.</p></div>
+  <ul>
+    <li><b>Энергия</b> — величина, характеризующая способность тел совершать работу.</li>
+    <li>К $K$ нельзя добавить константу: нет движения — нет кинетической энергии.</li>
+    <li>В теореме стоит работа <b>всех</b> сил, и консервативных, и нет.</li>
+  </ul>
+</article>
+
+<article class="par" id="p14">
+  <header><span class="pnum">§14</span><h3>Кинетическая энергия движущегося тела (теорема Кёнига)</h3><span class="pages">стр. 58–60</span>
+    <label class="check"><input type="checkbox" id="c-p14" data-k="p14">выучил</label></header>
+  <p class="ask">Доказать теорему Кёнига и объяснить, почему перекрёстный член равен нулю.</p>
+  <div class="formulas">$$K=\frac{mv_C^2}{2}+\frac{I_C\omega^2}{2}$$</div>
+  <div class="board"><h4>У доски</h4>
+    <ol>
+      <li>$K=\frac12\int v^2dm$, $\vec r=\vec R_C+\vec r_C$, $\vec v=\vec v_C+\vec\omega\times\vec r_C$.</li>
+      <li>Раскрываем квадрат: $K=\frac{mv_C^2}{2}+\vec v_C\cdot\left(\vec\omega\times\int\vec r_C\,dm\right)+\frac{\omega^2}{2}\int R^2dm$.</li>
+      <li>$\int\vec r_C\,dm=0$ (радиус-вектор центра масс из самого центра масс), средний член пропадает.</li>
+    </ol>
+    <p>Смысл, по автору: поступательное и вращательное движения независимы.</p></div>
+  <p class="src">Самостоятельные: как меняется $K$ при переходе в другую ИСО; работа силы $\vec F=b(2x\vec e_x-y\vec e_y)$ по окружности (ответ: ноль).</p>
+</article>
+
+<article class="par" id="p15">
+  <header><span class="pnum">§15</span><h3>Потенциальная энергия</h3><span class="pages">стр. 61–62</span>
+    <label class="check"><input type="checkbox" id="c-p15" data-k="p15">выучил</label></header>
+  <p class="ask">Определение через работу и четыре свойства.</p>
+  <p><b>Потенциальная энергия</b> в точке $\vec r$ — работа сил консервативного поля по удалению тела из этой точки на бесконечность или в точку нулевого потенциала $\vec r_0$:</p>
+  <div class="formulas">$$U(\vec r)=\int_{\vec r}^{\vec r_0}\vec F\cdot d\vec r,\qquad A_{12}^{конс}=A_{10}+A_{02}=U_1-U_2=-\Delta U$$</div>
+  <figure class="fig">
+    <span class="fig-tag">Схема</span>
+    <svg viewBox="0 0 520 250" role="img" aria-label="Работа из точки 1 в точку 2 напрямую и через точку нулевого потенциала 0">
+      <path d="M80 170 C180 235 330 225 436 152" class="s-main" marker-end="url(#ah-accent)"/>
+      <path d="M80 170 Q150 60 294 42" class="s-pen s-dash" marker-end="url(#ah-pen)"/>
+      <path d="M300 40 Q420 60 438 144" class="s-pen s-dash" marker-end="url(#ah-pen)"/>
+      <circle cx="80" cy="170" r="6" class="f-ink"/>
+      <circle cx="440" cy="150" r="6" class="f-ink"/>
+      <circle cx="300" cy="40" r="6" class="f-muted"/>
+      <text x="60" y="176">1</text>
+      <text x="452" y="156">2</text>
+      <text x="312" y="34">0 (здесь U = 0)</text>
+      <text x="256" y="244" text-anchor="middle" class="f-accent">A₁₂</text>
+      <text x="140" y="92" class="f-pen">A₁₀ = U₁</text>
+      <text x="402" y="82" class="f-pen">A₀₂ = −U₂</text>
+    </svg>
+    <figcaption>Сила консервативна, поэтому путь не важен: из 1 в 2 можно пройти через точку нулевого потенциала 0. По определению $A_{10}=U_1$, а $A_{02}=-A_{20}=-U_2$. Отсюда $A_{12}=U_1-U_2$.</figcaption>
+  </figure>
+  <ol>
+    <li>Не зависит от пути (консервативность), определяется взаимным расположением тел.</li>
+    <li>Работа консервативных сил равна убыли $U$ (рисунок с точками 1, 2, 0).</li>
+    <li>$U$ неоднозначна (зависит от $\vec r_0$), сама физического смысла не имеет. Смысл имеет её изменение.</li>
+    <li>Консервативные силы потенциальны. Обратное — вопрос на §20.</li>
+  </ol>
+</article>
+
+<article class="par" id="p16">
+  <header><span class="pnum">§16</span><h3>Уравнение энергетического баланса и закон сохранения энергии</h3><span class="pages">стр. 62–64</span>
+    <label class="check"><input type="checkbox" id="c-p16" data-k="p16">выучил</label></header>
+  <p class="ask">Вывод баланса и <b>два условия</b> ЗСЭ: про условия спрашивают почти всегда.</p>
+  <div class="board"><h4>У доски</h4>
+    <p>$A_{всех}=A^{конс}+A^{неконс}=K_2-K_1$, и $A^{конс}=U_1-U_2$. Отсюда</p>
+    <div class="formulas">$$(K_2+U_2)-(K_1+U_1)=A^{неконс}_{12},\qquad W_2-W_1=A^{неконс}_{12}$$</div>
+    <p>Без неконсервативных сил $W=K+U=\mathrm{const}$.</p></div>
+  <p><b>ЗСЭ выполняется, если</b> (А) система замкнута и (Б) консервативна.</p>
+  <p class="src">Самостоятельные: доказать, что система с $U=U(\vec r)$ консервативна; найти мощность при $\vec V=at\,\vec e_x+bt^2\vec e_y+ct^3\vec e_z$. Ответ: $N=m(a^2t+2b^2t^3+3c^2t^5)$.</p>
+</article>
+</section>
+
+<!-- ============ ВЕКТОРНЫЙ АНАЛИЗ ============ -->
+<section class="block">
+<header><h2>Сила и потенциальная энергия: набла</h2><span class="muted">Лекции 10–11, стр. 65–75</span></header>
+
+<article class="par" id="p17">
+  <header><span class="pnum">§17</span><h3>Силы и потенциальная энергия</h3><span class="pages">стр. 65–67</span>
+    <label class="check"><input type="checkbox" id="c-p17" data-k="p17">выучил</label></header>
+  <p class="ask">Вывести $\vec F=-\nabla U$ и условие консервативности $\mathrm{rot}\,\vec F=0$.</p>
+  <div class="board"><h4>У доски</h4>
+    <ol>
+      <li>$\delta A^{конс}=\vec F\cdot d\vec r=-dU$, значит $dU=-F_xdx-F_ydy-F_zdz$.</li>
+      <li>При $y,z=\mathrm{const}$: $F_x=-\partial U/\partial x$ (частная производная), так же для $y$, $z$.</li>
+      <li>$\vec F=-\mathrm{grad}\,U=-\nabla U$, $\nabla=\vec e_x\partial_x+\vec e_y\partial_y+\vec e_z\partial_z$.</li>
+      <li>$[\vec a\times\vec a]=0\Rightarrow\nabla\times\vec F=-\nabla\times\nabla U=0$.</li>
+    </ol></div>
+  <ul>
+    <li>$\mathrm{rot}\,\vec F=0$ — <b>необходимое</b> условие консервативности; для достаточно гладкой $\vec F$ — и <b>достаточное</b>.</li>
+    <li>Набла ввёл Уильям Роуэн Гамильтон (1805–1865); он же придумал векторы и кватернионы.</li>
+  </ul>
+  <p class="src">Самостоятельная: консервативна ли $\vec F=-k\vec r$? (Да, $U=kr^2/2$.)</p>
+</article>
+
+<article class="par" id="p18">
+  <header><span class="pnum">§18</span><h3>Векторные дифференциальные операторы</h3><span class="pages">стр. 68–69</span>
+    <label class="check"><input type="checkbox" id="c-p18" data-k="p18">выучил</label></header>
+  <p class="ask">Четыре оператора из набла и их запись в декартовых координатах.</p>
+  <div class="formulas">
+    $$\mathrm{grad}\,U=\nabla U,\qquad \mathrm{div}\,\vec A=\nabla\cdot\vec A=\frac{\partial A_x}{\partial x}+\frac{\partial A_y}{\partial y}+\frac{\partial A_z}{\partial z},\qquad \Delta=\nabla^2$$
+    $$\mathrm{rot}\,\vec B=\nabla\times\vec B=\begin{vmatrix}\vec e_x&\vec e_y&\vec e_z\\ \partial_x&\partial_y&\partial_z\\ B_x&B_y&B_z\end{vmatrix},\qquad (\mathrm{rot}\,\vec B)_z=\frac{\partial B_y}{\partial x}-\frac{\partial B_x}{\partial y}$$
+  </div>
+  <p>grad — вектор из скаляра, div — скаляр из вектора, rot — вектор из вектора. Компоненты векторного произведения — циклической перестановкой: $[\vec A\times\vec B]_x=A_yB_z-A_zB_y$.</p>
+</article>
+
+<article class="par" id="p19">
+  <header><span class="pnum">§19</span><h3>Свойства оператора набла</h3><span class="pages">стр. 70–71</span>
+    <label class="check"><input type="checkbox" id="c-p19" data-k="p19">выучил</label></header>
+  <p class="ask">Набла — производная по радиус-вектору; два тождества.</p>
+  <div class="board"><h4>У доски</h4>
+    <p>$x=\vec e_x\cdot\vec r\Rightarrow\dfrac{dx}{d\vec r}=\vec e_x$. По правилу сложной функции $\dfrac{dU}{d\vec r}=\dfrac{\partial U}{\partial x}\vec e_x+\dfrac{\partial U}{\partial y}\vec e_y+\dfrac{\partial U}{\partial z}\vec e_z=\nabla U$.</p></div>
+  <div class="formulas">
+    $$\nabla(fg)=g\nabla f+f\nabla g,\qquad \nabla U(f)=U'_f\,\nabla f$$
+    $$\mathrm{rot}\,\mathrm{grad}\,U=[\nabla\times\nabla]U=0,\qquad \mathrm{div}\,\mathrm{rot}\,\vec B=[\nabla\times\nabla]\cdot\vec B=0$$
+  </div>
+  <p>Второе тождество — через смешанное произведение: оно равно объёму параллелепипеда и не меняется при циклической перестановке, $\vec X\cdot[\vec Y\times\vec Z]=[\vec X\times\vec Y]\cdot\vec Z$.</p>
+</article>
+
+<article class="par" id="p20">
+  <header><span class="pnum">§20</span><h3>Связь консервативных сил и потенциальной энергии</h3><span class="pages">стр. 72–75</span>
+    <label class="check"><input type="checkbox" id="c-p20" data-k="p20">выучил</label></header>
+  <p class="ask">Два примера потенциалов и главный разобранный пример: проверить консервативность и найти $U$ двумя способами.</p>
+  <div class="formulas">
+    $$U=\vec a\cdot\vec r\Rightarrow\vec F=-\vec a\ \ (\text{однородное поле}),\qquad U=\frac{kr^2}{2}\Rightarrow\vec F=-k\vec r\ \ (\text{квазиупругая})$$
+  </div>
+  <figure class="fig">
+    <span class="fig-tag">Схема</span>
+    <svg id="fig-field" class="sq" viewBox="0 0 400 400" role="img" aria-label="Векторное поле силы, линии равной потенциальной энергии и путь интегрирования O, A, B"></svg>
+    <figcaption>Стрелки — сила $\vec F=a(x\vec e_x+2y\vec e_y)$ при $a&gt;0$, пунктир — линии $U=\mathrm{const}$ (эллипсы $x^2/2+y^2=\mathrm{const}$). Сила везде перпендикулярна этим линиям и смотрит туда, где $U$ меньше, так и выглядит $\vec F=-\nabla U$. Красный путь O→A→B — тот, по которому автор считает $U$ вторым способом.</figcaption>
+  </figure>
+  <div class="board"><h4>Пример у доски: $\vec F=a(x\vec e_x+2y\vec e_y)$</h4>
+    <ol>
+      <li>$(\mathrm{rot}\,\vec F)_z=\partial_x(2ay)-\partial_y(ax)=0$ — сила консервативна.</li>
+      <li><b>Способ 1</b>: $\partial U/\partial x=-ax\Rightarrow U=-\frac{ax^2}{2}+f(y)$; из $\partial U/\partial y=-2ay$ получаем $f=-ay^2+C$.</li>
+      <li><b>Способ 2</b>: $U=U_0-a\int_O^B(x\,dx+2y\,dy)$ по пути O→A (вдоль $x$) → B (вдоль $y$). Результат тот же.</li>
+      <li>Ответ: $U=-\frac{ax^2}{2}-ay^2+C$.</li>
+    </ol></div>
+  <p class="src">Самостоятельная: работа $\vec F=b(2x\vec e_x-y\vec e_y)$ по окружности любого радиуса равна нулю.</p>
+</article>
+</section>
+
+<!-- ============ СИММЕТРИИ ============ -->
+<section class="block">
+<header><h2>Законы сохранения и симметрии</h2><span class="muted">Лекции 11–12, стр. 76–84</span></header>
+
+<article class="par" id="p21">
+  <header><span class="pnum">§21</span><h3>Законы сохранения и симметрии пространства-времени</h3><span class="pages">стр. 76–79</span>
+    <label class="check"><input type="checkbox" id="c-p21" data-k="p21">выучил</label></header>
+  <p class="ask">Классификация законов сохранения и таблица «симметрия → закон». Эту таблицу стоит знать наизусть.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Динамический закон</th><th>Симметрия</th><th>Что это значит</th></tr>
+    <tr><td>Сохранение энергии</td><td>Однородность времени</td><td>Ход событий не зависит от начала отсчёта времени («переставить часы»)</td></tr>
+    <tr><td>Сохранение импульса</td><td>Однородность пространства</td><td>Не зависит от выбора начала координат (перенос тела отсчёта)</td></tr>
+    <tr><td>Сохранение момента импульса</td><td>Изотропия пространства</td><td>Не зависит от поворота системы как целого</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Динамические</b> законы ($W$, $\vec p$, $\vec L$ — константы движения) против <b>случайных</b>: заряда (Франклин, Фарадей), массы при $v\ll c$ (Ломоносов), спина, лептонного заряда.</li>
+    <li>Причины динамических законов: законы динамики и симметрии. Связь установила <b>Эмми Нётер в 1918 г.</b>, «основа современной физики».</li>
+    <li><b>CPT</b>: $t\to-t$, $\vec r\to-\vec r$, $q\to-q$ одновременно. Автор показывает инвариантность уравнения $m\ddot{\vec r}=q\vec E+q\vec v\times\vec B$. Никакой закон сохранения с CPT не связан.</li>
+  </ul>
+</article>
+
+<article class="par" id="p22">
+  <header><span class="pnum">§22</span><h3>Однородность времени и закон сохранения энергии</h3><span class="pages">стр. 79–81</span>
+    <label class="check"><input type="checkbox" id="c-p22" data-k="p22">выучил</label></header>
+  <p class="ask">Полный вывод ЗСЭ из однородности времени.</p>
+  <div class="board"><h4>У доски</h4>
+    <ol>
+      <li>$U=U(t;\vec r_1,\dots,\vec r_N)$: $dU=\frac{\partial U}{\partial t}dt+\sum\nabla_nU\cdot\vec v_n\,dt$.</li>
+      <li>$\nabla_nU=-\vec F_n=-m_n\dot{\vec v}_n$, а $\vec v_n\cdot\dot{\vec v}_n=\frac{d}{dt}\frac{v_n^2}{2}$.</li>
+      <li>Получаем $d(U+K)=\dfrac{\partial U}{\partial t}dt$.</li>
+      <li>Замкнутая система: время однородно, $\partial U/\partial t=0$, значит $W=K+U=\mathrm{const}$.</li>
+    </ol></div>
+  <p><b>Пример автора</b>: пружина, $U=kx^2/2$, явно от $t$ не зависит, энергия сохраняется. Если пружину нагревать, $k=k(T(t))$, $\partial U/\partial t\ne0$: время неоднородно, система незамкнута.</p>
+</article>
+
+<article class="par" id="p23">
+  <header><span class="pnum">§23</span><h3>Однородность пространства и закон сохранения импульса</h3><span class="pages">стр. 82–83</span>
+    <label class="check"><input type="checkbox" id="c-p23" data-k="p23">выучил</label></header>
+  <p class="ask">Автор оставил вывод «самим». Такие места любят спрашивать.</p>
+  <div class="board"><h4>У доски (схема не из книжки, по логике §22 и §24)</h4>
+    <p>Сдвиг (трансляция) $\vec r_n\to\vec r_n+\vec\varepsilon$, динамика не меняется, $dU=0$. Тогда $dU=\sum\nabla_nU\cdot\vec\varepsilon=-\vec\varepsilon\cdot\sum\vec F_n=0$ при любом $\vec\varepsilon$. Значит $\sum\vec F_n=0$, то есть $\frac{d}{dt}\sum m_n\vec v_n=0$ и $\vec p=\mathrm{const}$.</p></div>
+</article>
+
+<article class="par" id="p24">
+  <header><span class="pnum">§24</span><h3>Изотропия пространства и закон сохранения момента импульса</h3><span class="pages">стр. 83–84</span>
+    <label class="check"><input type="checkbox" id="c-p24" data-k="p24">выучил</label></header>
+  <p class="ask">Вывод ЗСМИ из поворота системы как целого.</p>
+  <div class="board"><h4>У доски</h4>
+    <ol>
+      <li>Поворот на $d\vec\varphi$: $d\vec r_n=d\vec\varphi\times\vec r_n$, и $dU=0$.</li>
+      <li>$dU=\sum(-\vec F_n)\cdot[d\vec\varphi\times\vec r_n]=-d\vec\varphi\cdot\sum\vec r_n\times\vec F_n=0$ (циклическая перестановка в смешанном произведении).</li>
+      <li>$d\vec\varphi$ любой, значит $\sum\vec r_n\times\frac{d}{dt}(m_n\vec v_n)=\frac{d}{dt}\sum\vec r_n\times m_n\vec v_n=0$ (так как $\dot{\vec r}\times m\vec v=0$).</li>
+      <li>$\vec L=\sum\vec r_n\times m_n\vec v_n=\mathrm{const}$.</li>
+    </ol></div>
+  <p class="src">Самостоятельные: вывести ЗСИ (§23); в центральном поле $r^2\omega=L/m=\mathrm{const}$ — второй закон Кеплера (закон площадей, 1609).</p>
+</article>
+</section>
+
+<!-- ============ ТЯГОТЕНИЕ ============ -->
+<section class="block">
+<header><h2>Тяготение и движение планет</h2><span class="muted">Лекции 13–15, стр. 85–103</span></header>
+
+<article class="par" id="p25">
+  <header><span class="pnum">§25</span><h3>Закон всемирного тяготения</h3><span class="pages">стр. 85–88</span>
+    <label class="check"><input type="checkbox" id="c-p25" data-k="p25">выучил</label></header>
+  <p class="ask">Закон, потенциальная энергия, напряжённость и потенциал поля, аналогия с электростатикой.</p>
+  <div class="formulas">
+    $$\vec F=-\frac{GMm}{r^2}\frac{\vec r}{r},\qquad U=-\frac{GMm}{r},\qquad \vec g=\frac{\vec F}{m}=-\frac{GM}{r^3}\vec r,\qquad \varphi=-\frac{GM}{r},\qquad \vec g=-\nabla\varphi$$
+    $$\text{собств. энергия: сфера } -\frac{GM^2}{2R},\quad \text{шар } -\frac35\frac{GM^2}{R}\ (\text{без вывода})$$
+  </div>
+  <ul>
+    <li>История: Гук опубликовал в 1674 г. (для круговых орбит из законов Кеплера, письмо Ньютону 1680), Ньютон распространил на эллипсы (1687).</li>
+    <li>Аналог — закон Кулона (1785), тоже «обратные квадраты»: $\vec F=\frac{KQq}{r^3}\vec r$, $\vec E$, $\varphi_{эл}=\frac{KQ}{r}$.</li>
+    <li>$G=6{,}67\cdot10^{-11}$ м³/(кг·с²) — наименее точно измеренная постоянная: нет отрицательных масс, внешнее тяготение не экранировать.</li>
+    <li>$U$ получают из $F_r=-dU/dr$ при $U(\infty)=0$.</li>
+  </ul>
+</article>
+
+<article class="par" id="p26">
+  <header><span class="pnum">§26</span><h3>Центробежный потенциал</h3><span class="pages">стр. 88–91</span>
+    <label class="check"><input type="checkbox" id="c-p26" data-k="p26">выучил</label></header>
+  <p class="ask">Свести движение планеты к одномерной задаче, нарисовать $U_{eff}(r)$, найти фокальный параметр.</p>
+  <div class="board"><h4>У доски</h4>
+    <ol>
+      <li>Скорость раскладываем на $v_r=\dot r$ и $v_\perp=\omega r$ (идея Гука): $W=\frac{m(\dot r^2+\omega^2r^2)}{2}-\frac{GMm}{r}$.</li>
+      <li>Момент сохраняется: $L=mr^2\omega$, $\omega=L/mr^2$.</li>
+      <li>$W=\dfrac{m\dot r^2}{2}+\underbrace{\dfrac{L^2}{2mr^2}-\dfrac{GMm}{r}}_{U_{eff}}$. Осталась одна переменная $r(t)$ — одномерная задача.</li>
+      <li>Минимум $U_{eff}$ (центробежная сила $L^2/mr^3$ = тяготению): $r_0=p=\dfrac{L^2}{GMm^2}$, $U_{eff,\min}=-\dfrac{GMm}{2p}$.</li>
+    </ol></div>
+  <figure class="fig">
+    <span class="fig-tag">Поиграй</span>
+    <svg id="fig-ueff" viewBox="0 0 560 310" role="img" aria-label="График эффективного потенциала и уровня полной энергии"></svg>
+    <div class="controls">
+      <label for="ueff-L">Момент L <input type="range" id="ueff-L" min="0.7" max="1.5" step="0.01" value="1"><span class="mono" id="ueff-Lv">1,00</span></label>
+      <label for="ueff-W">Энергия W <input type="range" id="ueff-W" min="-0.9" max="0.5" step="0.01" value="-0.3"><span class="mono" id="ueff-Wv">−0,30</span></label>
+    </div>
+    <div class="readout" id="ueff-out" aria-live="polite"></div>
+    <figcaption>Синяя кривая — $U_{eff}$, пунктиры — её слагаемые: центробежный барьер сверху и притяжение снизу. Красная линия — полная энергия $W$. Жирный участок — где планета может находиться ($W\ge U_{eff}$). Синяя точка — дно ямы при $r=p$. Единицы: $G=M=m=1$.</figcaption>
+  </figure>
+  <ul>
+    <li>Первое слагаемое — <b>центробежный барьер</b>, второе — притяжение. Вместе — <b>потенциальная яма</b>.</li>
+    <li>$K_r=0$ — круговая орбита радиуса $p$. Энергия в яме — <b>финитное</b> движение (эллипс). Иначе <b>инфинитное</b> (парабола, гипербола; так летят кометы).</li>
+  </ul>
+</article>
+
+<article class="par" id="p27">
+  <header><span class="pnum">§27</span><h3>Орбиты планет</h3><span class="pages">стр. 92–98</span><span class="flag">автор: может быть пропущена</span>
+    <label class="check"><input type="checkbox" id="c-p27" data-k="p27">выучил</label></header>
+  <p class="ask">Вывод уравнения орбиты через замену Бине и параметры эллипса.</p>
+  <div class="board"><h4>У доски</h4>
+    <ol>
+      <li>$m\dot v_r=\dfrac{L^2}{mr^3}-\dfrac{GMm}{r^2}$.</li>
+      <li>$v_r=\dfrac{dr}{d\alpha}\omega=r'\dfrac{L}{mr^2}$. Замена Бине $r=1/u$: $v_r=-\dfrac{L}{m}u'$, $\dot v_r=-\dfrac{L^2}{m^2}u^2u''$.</li>
+      <li>Подставляем: $u''+u=\dfrac1p$.</li>
+      <li>Решение $u=\dfrac1p+B\cos(\alpha-\alpha_0)$, отсюда $r=\dfrac{p}{1+\varepsilon\cos(\alpha-\alpha_0)}$, $\varepsilon=Bp$.</li>
+    </ol></div>
+  <figure class="fig">
+    <span class="fig-tag">Поиграй</span>
+    <svg id="fig-orbit" viewBox="0 0 600 360" role="img" aria-label="Орбита r = p/(1 + ε cos α) при разных эксцентриситетах"></svg>
+    <div class="controls">
+      <label for="orb-e">Эксцентриситет ε <input type="range" id="orb-e" min="0" max="1.6" step="0.01" value="0.5"><span class="mono" id="orb-ev">0,50</span></label>
+    </div>
+    <div class="readout" id="orb-out" aria-live="polite"></div>
+    <figcaption>Солнце в фокусе, фокальный параметр $p$ (красный пунктир) один и тот же. Двигай $\varepsilon$: 0 — окружность, меньше 1 — эллипс, ровно 1 — парабола, больше 1 — гипербола. P — перигелий, A — афелий, $a$ и $b$ — полуоси.</figcaption>
+  </figure>
+  <div class="grid2">
+    <div><h4>Типы орбит</h4>
+      <ul>
+        <li>$\varepsilon=0$ — окружность; $\varepsilon&lt;1$ — эллипс, $W&lt;0$ (планеты, кометы Галлея, Энке). Это 1-й закон Кеплера.</li>
+        <li>$\varepsilon=1$ — парабола, $W=0$.</li>
+        <li>$\varepsilon&gt;1$ — гипербола, $W&gt;0$.</li>
+        <li>Все три — конические сечения. Перигелий P, афелий A.</li>
+      </ul></div>
+    <div><h4>Параметры эллипса</h4>
+      <div class="formulas">
+        $$r_A=\frac{p}{1-\varepsilon},\quad r_P=\frac{p}{1+\varepsilon},\quad a=\frac{p}{1-\varepsilon^2},\quad b=\frac{p}{\sqrt{1-\varepsilon^2}}$$
+        $$r+r'=2a,\qquad f=2a\varepsilon,\qquad \varepsilon=\frac{f}{2a}$$
+      </div></div>
+  </div>
+  <p class="src">Самостоятельная: проверить, что $B\cos(\alpha-\alpha_0)$ решает $u''+u=0$.</p>
+</article>
+
+<article class="par" id="p28">
+  <header><span class="pnum">§28</span><h3>Законы движения планет</h3><span class="pages">стр. 98–100</span>
+    <label class="check"><input type="checkbox" id="c-p28" data-k="p28">выучил</label></header>
+  <p class="ask">Три закона Кеплера: формулировки и обоснование.</p>
+  <ul>
+    <li><b>Плоские орбиты</b>: $\vec N=\vec r\times\vec F=0$, значит $\vec L=\mathrm{const}$, и $\vec r,\vec v$ всегда в плоскости, перпендикулярной $\vec L$.</li>
+    <li><b>1-й закон</b>: планеты движутся по эллипсам, в одном из фокусов Солнце. Выведен в 1605 г. по данным Тихо Браге, опубликован в 1609 г.</li>
+    <li><b>2-й закон</b>: секториальная скорость постоянна, $S=\tfrac12rV_\perp=\dfrac{L}{2m}=\mathrm{const}$.</li>
+    <li><b>3-й закон</b>: квадраты периодов относятся как кубы больших полуосей.</li>
+  </ul>
+  <figure class="fig">
+    <span class="fig-tag">Анимация</span>
+    <svg id="fig-kep" viewBox="0 0 520 320" role="img" aria-label="Второй закон Кеплера: двенадцать секторов равной площади на эллиптической орбите"></svg>
+    <figcaption>Эллипс с $\varepsilon=0{,}6$ разбит на 12 секторов, каждый планета проходит за одно и то же время. У Солнца сектора короткие и широкие, вдали длинные и узкие, но площадь у всех одна. Два красных сектора, у перигелия и у афелия, равны. Это и есть постоянная секториальная скорость. Видно, что у Солнца планета летит быстрее.</figcaption>
+  </figure>
+  <div class="board"><h4>Вывод 3-го закона (у автора приближённый)</h4>
+    <p>В точке $r_0=p$ радиального ускорения нет: $\dfrac{GMm}{p^2}=m\omega^2p$, отсюда $\dfrac{T^2}{p^3}=\dfrac{4\pi^2}{GM}$. Так как $p=(1-\varepsilon^2)a$, а эксцентриситеты малы (максимум у Меркурия, 0,206), $\dfrac{T^2}{a^3}\approx\dfrac{4\pi^2}{GM}$.</p></div>
+</article>
+
+<article class="par" id="p29">
+  <header><span class="pnum">§29</span><h3>Отклонение комет Солнцем</h3><span class="pages">стр. 101–103</span>
+    <label class="check"><input type="checkbox" id="c-p29" data-k="p29">выучил</label></header>
+  <p class="ask">Формула Резерфорда для угла отклонения кометы.</p>
+  <ul>
+    <li><b>Прицельный параметр</b> $b$ — расстояние, на котором комета прошла бы мимо Солнца без притяжения. <b>Угол рассеяния</b> $\theta$ — угол между асимптотами гиперболы. <b>Сечение</b> $\sigma=\pi b^2$.</li>
+    <li>Впервые посчитал Резерфорд (рассеяние α-частиц на ядрах). Кулон похож на гравитацию, поэтому формула та же.</li>
+  </ul>
+  <figure class="fig">
+    <span class="fig-tag">Поиграй</span>
+    <svg id="fig-comet" viewBox="0 0 560 360" role="img" aria-label="Траектория кометы около Солнца при разных прицельном параметре и скорости"></svg>
+    <div class="controls">
+      <label for="com-b">Прицельный параметр b <input type="range" id="com-b" min="0.3" max="4" step="0.05" value="1.2"><span class="mono" id="com-bv">1,20</span></label>
+      <label for="com-v">Скорость v <input type="range" id="com-v" min="0.6" max="1.6" step="0.05" value="1"><span class="mono" id="com-vv">1,00</span></label>
+    </div>
+    <div class="readout" id="com-out" aria-live="polite"></div>
+    <figcaption>Комета прилетает слева со скоростью $v$ на прицельном расстоянии $b$ (красная мерка). Пунктир — путь без притяжения. Траектория посчитана численно прямо в браузере, и её угол сравнивается с формулой Резерфорда. Уменьши $v$ вдвое: чтобы угол остался прежним, $b$ должно вырасти в 4 раза, а сечение $\pi b^2$ в 16 раз. Отсюда $P\sim1/v^4$.</figcaption>
+  </figure>
+  <div class="board"><h4>У доски</h4>
+    <ol>
+      <li>Из треугольника импульсов ($|\vec p|=|\vec p\,'|$): $\Delta p=2p\sin\frac\theta2$.</li>
+      <li>С другой стороны $\Delta p=\int F\cos\alpha\,dt$, где $dt=d\psi/\omega$, $\omega=vb/r^2$ (сохранение $L=mvb$), $F=GMm/r^2$. Множитель $r^2$ сокращается.</li>
+      <li>$\Delta p=\dfrac{GMm}{vb}\displaystyle\int_0^{\pi+\theta}\sin\!\left(\psi-\frac\theta2\right)d\psi=\dfrac{2GMm}{vb}\cos\frac\theta2$.</li>
+      <li>Приравниваем при $p=mv$:</li>
+    </ol>
+    <div class="formulas">$$b=\frac{GM}{v^2}\operatorname{ctg}\frac\theta2,\qquad \operatorname{tg}\frac\theta2=\frac{GM}{v^2b},\qquad P\sim\pi b^2\sim\frac1{v^4}$$</div>
+    <p class="src">Здесь $p$ — импульс, а не фокальный параметр.</p></div>
+</article>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <p><b>Откуда это.</b> Темы — из «Календарно-тематического плана» Агапьева (осень 2026): коллоквиум в строке лекции 16, 23.10, по лекциям 1–15. Содержание — из книжки Б.Д. и К.Б. Агапьевых «Лекции по физике. Механика. Опорный конспект» (2026), стр. 5–103. Номера страниц — по книжке.</p>
+  <p>Вероятные вопросы — моя оценка по тому, что автор выделяет рамками и выводами. Это не официальный список. Решения самостоятельных и вывод ЗСИ в §23 добавлены мной, в книжке их нет.</p>
+  <p>Галочки «выучил» сохраняются только в этом браузере.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var boxes = document.querySelectorAll('.check input');
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem('agapiev-col1') || '{}'); } catch (e) { store = {}; }
+  function paint() {
+    var n = 0;
+    boxes.forEach(function (b) {
+      var k = b.dataset.k, on = !!store[k];
+      b.checked = on;
+      var art = document.getElementById(k);
+      if (art) art.classList.toggle('is-done', on);
+      var link = document.querySelector('.toc a[href="#' + k + '"]');
+      if (link) link.classList.toggle('is-done', on);
+      if (on) n++;
+    });
+    document.getElementById('progress').innerHTML = 'Отмечено: <b>' + n + '</b> из ' + boxes.length;
+  }
+  boxes.forEach(function (b) {
+    b.addEventListener('change', function () {
+      store[b.dataset.k] = b.checked;
+      try { localStorage.setItem('agapiev-col1', JSON.stringify(store)); } catch (e) {}
+      paint();
+    });
+  });
+  paint();
+})();
+</script>
+
+<script>
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  function S(tag, attrs, parent, text) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  const P = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  function runs(points, ok) {
+    const out = []; let cur = [];
+    points.forEach(p => { if (ok(p)) cur.push(p); else { if (cur.length > 1) out.push(cur); cur = []; } });
+    if (cur.length > 1) out.push(cur);
+    return out;
+  }
+  const num = (x, d) => x.toFixed(d).replace('.', ',').replace('-', '−');
+  const clear = g => { while (g.firstChild) g.removeChild(g.firstChild); };
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* §5 — Кориолис: лаборатория и карусель */
+  (function () {
+    const svg = document.getElementById('fig-cor'); if (!svg) return;
+    const R = 105, w = 0.7, T = 4.5, v = R / T, C1 = [140, 150], C2 = [420, 150];
+    function panel(c, title) {
+      S('text', { x: c[0], y: 24, 'text-anchor': 'middle' }, svg, title);
+      S('circle', { cx: c[0], cy: c[1], r: R, class: 'f-soft s-rule' }, svg);
+      const sp = [];
+      for (let k = 0; k < 4; k++) sp.push(S('line', { x1: c[0], y1: c[1], x2: c[0], y2: c[1], class: 's-ax' }, svg));
+      return sp;
+    }
+    const sp1 = panel(C1, 'Из лаборатории (ИСО)');
+    const sp2 = panel(C2, 'С карусели (неИСО)');
+    sp2.forEach((l, k) => { const a = k * Math.PI / 2; l.setAttribute('x2', C2[0] + R * Math.cos(a)); l.setAttribute('y2', C2[1] - R * Math.sin(a)); });
+    const ra = R + 14, a1 = -0.45, a2 = 0.45;
+    S('path', { d: `M ${C1[0] + ra * Math.cos(a1)} ${C1[1] - ra * Math.sin(a1)} A ${ra} ${ra} 0 0 0 ${C1[0] + ra * Math.cos(a2)} ${C1[1] - ra * Math.sin(a2)}`, class: 's-main', 'marker-end': 'url(#ah-accent)' }, svg);
+    S('text', { x: C1[0] + ra + 4, y: C1[1] + 6, class: 'f-accent' }, svg, 'ω');
+    const tr1 = S('polyline', { class: 's-pen' }, svg);
+    const tr2 = S('polyline', { class: 's-pen' }, svg);
+    S('circle', { cx: C1[0], cy: C1[1], r: 3, class: 'f-muted' }, svg);
+    S('circle', { cx: C2[0], cy: C2[1], r: 3, class: 'f-muted' }, svg);
+    const b1 = S('circle', { r: 6, class: 'f-pen' }, svg);
+    const b2 = S('circle', { r: 6, class: 'f-pen' }, svg);
+    const fa = S('line', { class: 's-ink', 'marker-end': 'url(#ah-ink)' }, svg);
+    const fl = S('text', { class: 't-small', 'text-anchor': 'middle' }, svg, 'F кор');
+    const pos = s => [C2[0] + v * s * Math.cos(w * s), C2[1] + v * s * Math.sin(w * s)];
+    function draw(t) {
+      const phi = w * t;
+      sp1.forEach((l, k) => { const a = phi + k * Math.PI / 2; l.setAttribute('x2', C1[0] + R * Math.cos(a)); l.setAttribute('y2', C1[1] - R * Math.sin(a)); });
+      b1.setAttribute('cx', C1[0] + v * t); b1.setAttribute('cy', C1[1]);
+      tr1.setAttribute('points', P([C1, [C1[0] + v * t, C1[1]]]));
+      const pts = []; for (let i = 0; i <= 90; i++) pts.push(pos(t * i / 90));
+      tr2.setAttribute('points', P(pts));
+      const p = pos(t);
+      b2.setAttribute('cx', p[0]); b2.setAttribute('cy', p[1]);
+      const vx = v * Math.cos(phi) - v * t * w * Math.sin(phi);
+      const vy = -v * Math.sin(phi) - v * t * w * Math.cos(phi);
+      let fx = vy * w, fy = vx * w;
+      const n = Math.hypot(fx, fy) || 1; fx = fx / n * 32; fy = fy / n * 32;
+      fa.setAttribute('x1', p[0]); fa.setAttribute('y1', p[1]);
+      fa.setAttribute('x2', p[0] + fx); fa.setAttribute('y2', p[1] + fy);
+      fl.setAttribute('x', p[0] + fx * 1.75); fl.setAttribute('y', p[1] + fy * 1.75 + 5);
+    }
+    const btn = document.getElementById('cor-btn');
+    let playing = !reduce, last = null, t = reduce ? T : 0, hold = 0;
+    function frame(ts) {
+      if (!playing) { last = null; return; }
+      const dt = last == null ? 0 : Math.min(0.1, (ts - last) / 1000); last = ts;
+      if (t >= T) { hold += dt; if (hold > 1.2) { t = 0; hold = 0; } } else t = Math.min(T, t + dt);
+      draw(t); requestAnimationFrame(frame);
+    }
+    draw(t);
+    btn.textContent = playing ? 'Пауза' : 'Пуск';
+    btn.addEventListener('click', () => { playing = !playing; btn.textContent = playing ? 'Пауза' : 'Пуск'; if (playing) { if (t >= T) { t = 0; hold = 0; } requestAnimationFrame(frame); } });
+    if (playing) requestAnimationFrame(frame);
+  })();
+
+  /* §20 — поле F = a(x ex + 2y ey) */
+  (function () {
+    const svg = document.getElementById('fig-field'); if (!svg) return;
+    const s = 85, c = 200, X = x => c + x * s, Y = y => c - y * s;
+    [0.3, 0.8, 1.6, 2.8].forEach(k => {
+      const pts = [];
+      for (let i = 0; i <= 120; i++) { const a = i / 120 * 2 * Math.PI; pts.push([X(Math.sqrt(2 * k) * Math.cos(a)), Y(Math.sqrt(k) * Math.sin(a))]); }
+      S('polyline', { points: P(pts), class: 's-ax s-dash' }, svg);
+    });
+    S('line', { x1: 10, y1: c, x2: 392, y2: c, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+    S('line', { x1: c, y1: 390, x2: c, y2: 8, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+    S('text', { x: 380, y: c - 8, class: 't-small' }, svg, 'x');
+    S('text', { x: c + 8, y: 18, class: 't-small' }, svg, 'y');
+    S('text', { x: X(0) + 6, y: Y(Math.sqrt(0.8)) - 6, class: 't-small' }, svg, 'U = const');
+    for (let x = -2; x <= 2.001; x += 0.5) for (let y = -2; y <= 2.001; y += 0.5) {
+      if (Math.abs(x) < 0.01 && Math.abs(y) < 0.01) continue;
+      const fx = x, fy = 2 * y, m = Math.hypot(fx, fy), len = Math.min(0.4, 0.12 + 0.07 * m);
+      S('line', { x1: X(x), y1: Y(y), x2: X(x + fx / m * len), y2: Y(y + fy / m * len), class: 's-field', 'marker-end': 'url(#ah-accent)' }, svg);
+    }
+    const A = [1.5, 0], B = [1.5, 1.25];
+    S('line', { x1: X(0), y1: Y(0), x2: X(A[0]) - 2, y2: Y(A[1]), class: 's-pen', 'marker-end': 'url(#ah-pen)' }, svg);
+    S('line', { x1: X(A[0]), y1: Y(A[1]), x2: X(B[0]), y2: Y(B[1]) + 2, class: 's-pen', 'marker-end': 'url(#ah-pen)' }, svg);
+    [[0, 0, 'O', -16, 18], [A[0], A[1], 'A', 6, 18], [B[0], B[1], 'B (x, y)', 8, -6]].forEach(q => {
+      S('circle', { cx: X(q[0]), cy: Y(q[1]), r: 4, class: 'f-pen' }, svg);
+      S('text', { x: X(q[0]) + q[3], y: Y(q[1]) + q[4], class: 'f-pen' }, svg, q[2]);
+    });
+  })();
+
+  /* §26 — эффективный потенциал */
+  (function () {
+    const svg = document.getElementById('fig-ueff'); if (!svg) return;
+    const L0 = 50, R0 = 540, T0 = 16, B0 = 300, rmax = 8, umax = 1.0, umin = -1.2;
+    const X = r => L0 + r / rmax * (R0 - L0), Y = u => T0 + (umax - u) / (umax - umin) * (B0 - T0);
+    S('line', { x1: L0, y1: Y(0), x2: R0 + 8, y2: Y(0), class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+    S('line', { x1: L0, y1: B0, x2: L0, y2: T0 - 6, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+    S('text', { x: R0 - 6, y: Y(0) - 8, class: 't-small' }, svg, 'r');
+    S('text', { x: L0 + 8, y: T0 + 6, class: 't-small' }, svg, 'U');
+    const g = S('g', {}, svg);
+    const inL = document.getElementById('ueff-L'), inW = document.getElementById('ueff-W');
+    const out = document.getElementById('ueff-out');
+    function curve(f, cls) {
+      const pts = []; for (let r = 0.1; r <= rmax; r += 0.02) pts.push([r, f(r)]);
+      runs(pts, p => p[1] <= umax && p[1] >= umin).forEach(run => S('polyline', { points: P(run.map(p => [X(p[0]), Y(p[1])])), class: cls }, g));
+    }
+    function upd() {
+      const L = +inL.value, W = +inW.value; clear(g);
+      document.getElementById('ueff-Lv').textContent = num(L, 2);
+      document.getElementById('ueff-Wv').textContent = num(W, 2);
+      const p = L * L, bottom = -1 / (2 * p), ue = r => L * L / (2 * r * r) - 1 / r;
+      curve(r => L * L / (2 * r * r), 's-ax s-dash');
+      curve(r => -1 / r, 's-ax s-dash');
+      curve(ue, 's-main');
+      S('text', { x: X(L / Math.sqrt(1.6)) + 8, y: Y(0.8), class: 't-small' }, g, 'L²/2mr²');
+      S('text', { x: X(6.2), y: Y(-1 / 6.2) + 18, class: 't-small' }, g, '−GMm/r');
+      S('text', { x: X(5.2), y: Y(ue(5.2)) - 8, class: 'f-accent' }, g, 'U eff');
+      S('line', { x1: L0, y1: Y(W), x2: R0, y2: Y(W), class: 's-pen s-thin s-dash' }, g);
+      S('text', { x: R0 - 4, y: Y(W) - 6, 'text-anchor': 'end', class: 'f-pen' }, g, 'W');
+      const d = 1 + 2 * W * L * L, eps = Math.sqrt(Math.max(0, d)), tol = 0.004;
+      let r1 = null, r2 = null, kind;
+      if (W < bottom - tol) kind = 'none';
+      else if (Math.abs(W - bottom) <= tol) { r1 = r2 = p; kind = 'circle'; }
+      else if (W < -tol) { r1 = (-1 + Math.sqrt(d)) / (2 * W); r2 = (-1 - Math.sqrt(d)) / (2 * W); kind = 'ellipse'; }
+      else if (W <= tol) { r1 = L * L / 2; kind = 'parabola'; }
+      else { r1 = (-1 + Math.sqrt(d)) / (2 * W); kind = 'hyperbola'; }
+      if (r1 != null) {
+        const end = r2 == null ? rmax : Math.min(r2, rmax);
+        S('line', { x1: X(r1), y1: Y(W), x2: X(end), y2: Y(W), class: 's-pen s-thick' }, g);
+        [r1, r2].forEach(r => { if (r != null && r <= rmax) {
+          S('line', { x1: X(r), y1: Y(W), x2: X(r), y2: Y(0), class: 's-ax s-dash' }, g);
+          S('circle', { cx: X(r), cy: Y(W), r: 4, class: 'f-pen' }, g);
+        } });
+      }
+      S('circle', { cx: X(p), cy: Y(bottom), r: 5, class: 'f-accent' }, g);
+      S('text', { x: X(p) - 4, y: Y(bottom) + 22, class: 'f-accent' }, g, 'p');
+      const head = `p = L²/GMm² = ${num(p, 2)}, дно ямы −GMm/2p = ${num(bottom, 2)}. `;
+      const msg = {
+        none: () => 'Энергия ниже дна ямы: такого движения нет.',
+        circle: () => 'Энергия на самом дне: r = p, орбита — окружность (ε = 0).',
+        ellipse: () => `Финитное движение: r от ${num(r1, 2)} до ${num(r2, 2)}. Орбита — эллипс, ε = ${num(eps, 2)}.`,
+        parabola: () => 'W = 0: тело уходит на бесконечность. Орбита — парабола (ε = 1).',
+        hyperbola: () => `Инфинитное движение: r ≥ ${num(r1, 2)}, тело улетает. Орбита — гипербола, ε = ${num(eps, 2)}.`
+      };
+      out.textContent = head + msg[kind]();
+    }
+    inL.addEventListener('input', upd); inW.addEventListener('input', upd); upd();
+  })();
+
+  /* §27 — орбита r = p/(1 + ε cos α) */
+  (function () {
+    const svg = document.getElementById('fig-orbit'); if (!svg) return;
+    const Fx = 400, Fy = 180, p = 70;
+    const g = S('g', {}, svg);
+    const inE = document.getElementById('orb-e'), out = document.getElementById('orb-out');
+    function upd() {
+      const e = +inE.value; clear(g);
+      document.getElementById('orb-ev').textContent = num(e, 2);
+      S('line', { x1: 0, y1: Fy, x2: 600, y2: Fy, class: 's-grid' }, g);
+      const pts = [];
+      for (let a = -Math.PI; a <= Math.PI + 1e-9; a += 0.004) {
+        const den = 1 + e * Math.cos(a);
+        if (den < 0.003) { pts.push(null); continue; }
+        const r = p / den;
+        pts.push(r > 2000 ? null : [Fx + r * Math.cos(a), Fy - r * Math.sin(a)]);
+      }
+      runs(pts, q => q != null).forEach(run => S('polyline', { points: P(run), class: 's-main' }, g));
+      S('line', { x1: Fx, y1: Fy, x2: Fx, y2: Fy - p, class: 's-pen s-dash' }, g);
+      S('text', { x: Fx + 6, y: Fy - p / 2, class: 'f-pen' }, g, 'p');
+      const rp = p / (1 + e);
+      S('circle', { cx: Fx + rp, cy: Fy, r: 4, class: 'f-ink' }, g);
+      S('text', { x: Fx + rp + 6, y: Fy + 18 }, g, 'P');
+      let txt;
+      if (e < 0.995) {
+        const a = p / (1 - e * e), cx = Fx - a * e, b = p / Math.sqrt(1 - e * e), xa = Fx - p / (1 - e);
+        if (e > 0.005) {
+          S('line', { x1: cx, y1: Fy, x2: cx, y2: Fy - b, class: 's-ax' }, g);
+          S('text', { x: cx + 6, y: Fy - b / 2, class: 't-small' }, g, 'b');
+          S('circle', { cx: Fx - 2 * a * e, cy: Fy, r: 4, class: 'f-muted' }, g);
+          S('text', { x: Fx - 2 * a * e - 4, y: Fy - 10, 'text-anchor': 'middle', class: 't-small' }, g, 'O′');
+        }
+        S('text', { x: (cx + Fx + rp) / 2, y: Fy + 20, 'text-anchor': 'middle', class: 't-small' }, g, 'a');
+        if (xa > 8) { S('circle', { cx: xa, cy: Fy, r: 4, class: 'f-ink' }, g); S('text', { x: xa + 6, y: Fy + 18 }, g, 'A'); }
+        txt = e <= 0.005
+          ? 'ε = 0: окружность радиуса p, полная энергия W < 0.'
+          : `ε < 1: эллипс, W < 0. Перигелий p/(1+ε) = ${num(1 / (1 + e), 2)}p, афелий p/(1−ε) = ${num(1 / (1 - e), 2)}p, a = ${num(1 / (1 - e * e), 2)}p, b = ${num(1 / Math.sqrt(1 - e * e), 2)}p.`;
+      } else if (e <= 1.005) {
+        txt = 'ε = 1: парабола, W = 0. Тело уходит и не возвращается.';
+      } else {
+        txt = `ε > 1: гипербола, W > 0. Перигелий p/(1+ε) = ${num(1 / (1 + e), 2)}p. Так пролетают многие кометы.`;
+      }
+      S('circle', { cx: Fx, cy: Fy, r: 8, class: 'f-sun' }, g);
+      S('text', { x: Fx - 10, y: Fy + 26, 'text-anchor': 'end', class: 't-small' }, g, 'Солнце');
+      out.textContent = txt;
+    }
+    inE.addEventListener('input', upd); upd();
+  })();
+
+  /* §28 — закон площадей */
+  (function () {
+    const svg = document.getElementById('fig-kep'); if (!svg) return;
+    const e = 0.6, a = 190, b = a * Math.sqrt(1 - e * e), Cx = 250, Cy = 160, Fx = Cx + a * e, N = 12;
+    const solveE = M => { let E = M; for (let i = 0; i < 40; i++) E -= (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E)); return E; };
+    const pos = E => [Cx + a * Math.cos(E), Cy - b * Math.sin(E)];
+    for (let k = 0; k < N; k++) {
+      const E1 = solveE(2 * Math.PI * k / N), E2 = solveE(2 * Math.PI * (k + 1) / N);
+      const pts = [[Fx, Cy]]; for (let i = 0; i <= 24; i++) pts.push(pos(E1 + (E2 - E1) * i / 24));
+      const cls = (k === 0 || k === 6) ? 'f-pen-soft' : (k % 2 ? 'f-soft' : 'f-none');
+      S('polygon', { points: P(pts), class: cls + ' s-rule' }, svg);
+    }
+    const ring = []; for (let i = 0; i <= 200; i++) ring.push(pos(2 * Math.PI * i / 200));
+    S('polyline', { points: P(ring), class: 's-main' }, svg);
+    S('circle', { cx: Fx, cy: Cy, r: 8, class: 'f-sun' }, svg);
+    S('text', { x: Cx + a + 6, y: Cy + 5, class: 't-small' }, svg, 'перигелий');
+    S('text', { x: Cx - a - 6, y: Cy + 5, 'text-anchor': 'end', class: 't-small' }, svg, 'афелий');
+    const planet = S('circle', { r: 6, class: 'f-pen' }, svg);
+    const place = M => { const q = pos(solveE(M)); planet.setAttribute('cx', q[0]); planet.setAttribute('cy', q[1]); };
+    if (reduce) { place(1); return; }
+    const t0 = performance.now();
+    (function tick(ts) { place(((ts - t0) / 12000 * 2 * Math.PI) % (2 * Math.PI)); requestAnimationFrame(tick); })(t0);
+  })();
+
+  /* §29 — комета и формула Резерфорда */
+  (function () {
+    const svg = document.getElementById('fig-comet'); if (!svg) return;
+    const s = 34, cx = 280, cy = 190, X = x => cx + x * s, Y = y => cy - y * s;
+    S('line', { x1: 0, y1: cy, x2: 560, y2: cy, class: 's-grid' }, svg);
+    const g = S('g', {}, svg);
+    S('circle', { cx: cx, cy: cy, r: 9, class: 'f-sun' }, svg);
+    S('text', { x: cx + 12, y: cy + 24, class: 't-small' }, svg, 'Солнце');
+    const inB = document.getElementById('com-b'), inV = document.getElementById('com-v'), out = document.getElementById('com-out');
+    function deriv(x, y, vx, vy) { const r = Math.hypot(x, y), k = -1 / (r * r * r); return [vx, vy, k * x, k * y]; }
+    function simulate(b, v) {
+      let x = -300, y = b, vx = v, vy = 0; const pts = [];
+      for (let i = 0; i < 300000; i++) {
+        const r = Math.hypot(x, y);
+        if (r > 300 && x * vx + y * vy > 0) break;
+        const dt = Math.min(1, Math.max(1e-5, 0.01 * Math.pow(r, 1.5)));
+        const k1 = deriv(x, y, vx, vy);
+        const k2 = deriv(x + dt / 2 * k1[0], y + dt / 2 * k1[1], vx + dt / 2 * k1[2], vy + dt / 2 * k1[3]);
+        const k3 = deriv(x + dt / 2 * k2[0], y + dt / 2 * k2[1], vx + dt / 2 * k2[2], vy + dt / 2 * k2[3]);
+        const k4 = deriv(x + dt * k3[0], y + dt * k3[1], vx + dt * k3[2], vy + dt * k3[3]);
+        x += dt / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]);
+        y += dt / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]);
+        vx += dt / 6 * (k1[2] + 2 * k2[2] + 2 * k3[2] + k4[2]);
+        vy += dt / 6 * (k1[3] + 2 * k2[3] + 2 * k3[3] + k4[3]);
+        pts.push(Math.abs(x) < 9 && Math.abs(y) < 6.5 ? [X(x), Y(y)] : null);
+      }
+      return { pts, theta: Math.atan2(-vy, vx) };
+    }
+    function upd() {
+      const b = +inB.value, v = +inV.value; clear(g);
+      document.getElementById('com-bv').textContent = num(b, 2);
+      document.getElementById('com-vv').textContent = num(v, 2);
+      S('line', { x1: 0, y1: Y(b), x2: 560, y2: Y(b), class: 's-ax s-dash' }, g);
+      S('line', { x1: X(-7), y1: Y(0) - 1, x2: X(-7), y2: Y(b) + 1, class: 's-pen', 'marker-start': 'url(#ah-pen)', 'marker-end': 'url(#ah-pen)' }, g);
+      S('text', { x: X(-7) - 10, y: Y(b / 2) + 5, 'text-anchor': 'end', class: 'f-pen' }, g, 'b');
+      const sim = simulate(b, v);
+      const rs = runs(sim.pts, q => q != null);
+      rs.forEach((run, i) => S('polyline', Object.assign({ points: P(run), class: 's-main' }, i === rs.length - 1 ? { 'marker-end': 'url(#ah-accent)' } : {}), g));
+      const thF = 2 * Math.atan(1 / (v * v * b)) * 180 / Math.PI, thS = sim.theta * 180 / Math.PI;
+      out.textContent = `Формула Резерфорда: θ = 2·arctg(GM/v²b) = ${num(thF, 1)}°. Моделирование: ${num(thS, 1)}°. Сечение σ = πb² = ${num(Math.PI * b * b, 2)}.`;
+    }
+    inB.addEventListener('input', upd); inV.addEventListener('input', upd); upd();
+  })();
+})();
+</script>
+
+<script>
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  function S(tag, attrs, parent, text) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  const P = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const num = (x, d) => (Math.abs(x) < 0.5 * Math.pow(10, -d) ? 0 : x).toFixed(d).replace('.', ',').replace('-', '−');
+  const clear = g => { while (g.firstChild) g.removeChild(g.firstChild); };
+  const lin = (a0, a1, b0, b1) => v => b0 + (v - a0) / (a1 - a0) * (b1 - b0);
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const MK = { 's-main': 'ah-accent', 's-pen': 'ah-pen', 's-ink': 'ah-ink', 's-ax': 'ah-muted' };
+  function arr(g, x1, y1, x2, y2, cls, both) {
+    if (Math.hypot(x2 - x1, y2 - y1) < 3) return null;
+    const m = `url(#${MK[cls.split(' ')[0]]})`;
+    const a = { x1, y1, x2, y2, class: cls, 'marker-end': m };
+    if (both) a['marker-start'] = m;
+    return S('line', a, g);
+  }
+  function T(g, x, y, s, cls, anchor) {
+    const a = { x, y };
+    if (cls) a.class = cls;
+    if (anchor) a['text-anchor'] = anchor;
+    return S('text', a, g, s);
+  }
+  const slider = (id, label, min, max, step, val) =>
+    `<label for="${id}">${label} <input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}"><span class="mono" id="${id}-v"></span></label>`;
+  const ctl = html => `<div class="controls">${html}</div>`;
+  function addFig(pid, o) {
+    const art = document.getElementById(pid); if (!art) return;
+    const f = document.createElement('figure'); f.className = 'fig';
+    f.innerHTML = `<span class="fig-tag">${o.tag}</span><svg viewBox="${o.vb}" role="img" aria-label="${o.label}"${o.sq ? ' class="sq"' : ''}></svg>${o.controls || ''}${o.readout ? '<div class="readout" aria-live="polite"></div>' : ''}<figcaption>${o.cap}</figcaption>`;
+    const q = Array.from(art.children).find(el => el.querySelector && el.querySelector('.qs'));
+    art.insertBefore(f, q || null);
+    try { o.build(f.querySelector('svg'), f, f.querySelector('.readout')); } catch (e) { console.error(pid, e); }
+  }
+  const val = (f, id) => +f.querySelector('#' + id).value;
+  const show = (f, id, s) => { const e = f.querySelector('#' + id + '-v'); if (e) e.textContent = s; };
+  function onInput(f, ids, upd) { ids.forEach(id => f.querySelector('#' + id).addEventListener('input', upd)); upd(); }
+  function plotLine(g, pts, X, Y, cls, ylo, yhi) {
+    let cur = [];
+    const flush = () => { if (cur.length > 1) S('polyline', { points: P(cur), class: cls }, g); cur = []; };
+    pts.forEach(p => { if (p[1] >= ylo && p[1] <= yhi && isFinite(p[1])) cur.push([X(p[0]), Y(p[1])]); else flush(); });
+    flush();
+  }
+
+  /* §1 путь и перемещение */
+  addFig('p1', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Путь по траектории и вектор перемещения', readout: true,
+    controls: ctl(slider('f1-u', 'Где точка 2', 0.02, 1, 0.01, 0.8)),
+    cap: String.raw`Синяя дуга — путь $S$, красная хорда — перемещение $\vec\ell=\Delta\vec r=\vec r_2-\vec r_1$. Хорда никогда не длиннее дуги. Подвинь точку 2 к точке 1: отношение $|\Delta\vec r|/\Delta S$ стремится к 1. Поэтому $dS=|d\vec r|$ и $v=dS/dt$.`,
+    build(svg, f, out) {
+      const cx = t => 60 + 440 * t, cy = t => 235 - 170 * Math.sin(0.95 * Math.PI * t) * (1 - 0.3 * t);
+      const full = []; for (let i = 0; i <= 200; i++) full.push([cx(i / 200), cy(i / 200)]);
+      S('polyline', { points: P(full), class: 's-ax s-dash' }, svg);
+      const O = [30, 288];
+      S('circle', { cx: O[0], cy: O[1], r: 4, class: 'f-muted' }, svg); T(svg, O[0] + 8, O[1] + 4, 'O', 't-small');
+      const g = S('g', {}, svg);
+      onInput(f, ['f1-u'], () => {
+        const u = val(f, 'f1-u'); show(f, 'f1-u', num(u, 2)); clear(g);
+        const n = Math.max(2, Math.round(u * 300)), pts = []; let len = 0;
+        for (let i = 0; i <= n; i++) { const t = u * i / n; pts.push([cx(t), cy(t)]); if (i) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); }
+        const p1 = pts[0], p2 = pts[n];
+        S('line', { x1: O[0], y1: O[1], x2: p1[0], y2: p1[1], class: 's-ax' }, g);
+        S('line', { x1: O[0], y1: O[1], x2: p2[0], y2: p2[1], class: 's-ax' }, g);
+        S('polyline', { points: P(pts), class: 's-main' }, g);
+        const l = Math.hypot(p2[0] - p1[0], p2[1] - p1[1]);
+        arr(g, p1[0], p1[1], p2[0], p2[1], 's-pen');
+        S('circle', { cx: p1[0], cy: p1[1], r: 5, class: 'f-ink' }, g); S('circle', { cx: p2[0], cy: p2[1], r: 5, class: 'f-ink' }, g);
+        T(g, p1[0] - 4, p1[1] + 22, '1'); T(g, p2[0] + 8, p2[1] - 8, '2');
+        T(g, (O[0] + p2[0]) / 2 + 6, (O[1] + p2[1]) / 2, 'r₂', 't-small');
+        out.textContent = `Путь ΔS = ${num(len / 100, 2)}, перемещение |Δr| = ${num(l / 100, 2)}, отношение |Δr|/ΔS = ${num(len ? l / len : 1, 3)}.`;
+      });
+    }
+  });
+
+  /* §3 сложение векторов и вращение */
+  addFig('p3', {
+    tag: 'Схема', vb: '0 0 600 280', label: 'Сложение радиус-векторов и скорость точки во вращающейся системе',
+    cap: String.raw`Слева поступательное движение: $\vec r=\vec r_0+\vec r\,'$, отсюда $\vec v=\vec v_0+\vec v\,'$ (при $t=t'$). Справа вращение вокруг оси: точка идёт по окружности радиуса $R=r\sin\theta$, скорость касается этой окружности, $\vec v=\vec\omega\times\vec r$ и $v=\omega R$.`,
+    build(svg) {
+      const O = [40, 240], O2 = [160, 190], M = [235, 70];
+      arr(svg, O[0], O[1], O[0] + 60, O[1], 's-ax'); arr(svg, O[0], O[1], O[0], O[1] - 60, 's-ax');
+      arr(svg, O2[0], O2[1], O2[0] + 50, O2[1], 's-ax'); arr(svg, O2[0], O2[1], O2[0], O2[1] - 50, 's-ax');
+      arr(svg, O[0], O[1], O2[0], O2[1], 's-ink');
+      arr(svg, O2[0], O2[1], M[0], M[1], 's-pen');
+      arr(svg, O[0], O[1], M[0], M[1], 's-main');
+      S('circle', { cx: M[0], cy: M[1], r: 5, class: 'f-ink' }, svg);
+      T(svg, O[0] - 4, O[1] + 22, 'O (K)'); T(svg, O2[0] + 4, O2[1] + 22, 'O′ (K′)'); T(svg, M[0] + 8, M[1] - 6, 'm');
+      T(svg, 104, 232, 'r₀', 't-small'); T(svg, 204, 140, 'r′', 'f-pen'); T(svg, 112, 140, 'r', 'f-accent');
+      const ax = 450, cyE = 110, rx = 80, ry = 22, Oa = [ax, 235];
+      S('line', { x1: ax, y1: 268, x2: ax, y2: 62, class: 's-ax s-dash' }, svg);
+      arr(svg, ax, 62, ax, 22, 's-main'); T(svg, ax + 8, 30, 'ω', 'f-accent');
+      S('ellipse', { cx: ax, cy: cyE, rx, ry, class: 's-ax' }, svg);
+      const a = Math.PI / 3, Mp = [ax + rx * Math.cos(a), cyE + ry * Math.sin(a)];
+      S('line', { x1: ax, y1: cyE, x2: Mp[0], y2: Mp[1], class: 's-pen s-thin s-dash' }, svg);
+      T(svg, 500, 156, 'R = r sin θ', 't-small');
+      arr(svg, Oa[0], Oa[1], Mp[0], Mp[1], 's-ink'); T(svg, 476, 196, 'r');
+      const tx = rx * Math.sin(a), ty = -ry * Math.cos(a), tn = Math.hypot(tx, ty);
+      arr(svg, Mp[0], Mp[1], Mp[0] + tx / tn * 62, Mp[1] + ty / tn * 62, 's-pen'); T(svg, Mp[0] + 66, Mp[1] - 10, 'v = ω×r', 'f-pen');
+      const ang = Math.atan2(Oa[1] - Mp[1], Mp[0] - Oa[0]), pr = 32;
+      S('path', { d: `M ${Oa[0]} ${Oa[1] - pr} A ${pr} ${pr} 0 0 1 ${Oa[0] + pr * Math.cos(ang)} ${Oa[1] - pr * Math.sin(ang)}`, class: 's-ax' }, svg);
+      T(svg, Oa[0] + 6, Oa[1] - 40, 'θ', 't-small');
+      S('circle', { cx: Mp[0], cy: Mp[1], r: 5, class: 'f-ink' }, svg);
+      S('circle', { cx: Oa[0], cy: Oa[1], r: 4, class: 'f-muted' }, svg); T(svg, Oa[0] + 8, Oa[1] + 18, 'O', 't-small');
+    }
+  });
+
+  /* §4 центростремительное и кориолисово ускорения */
+  addFig('p4', {
+    tag: 'Поиграй', vb: '0 0 560 350', label: 'Центростремительное и кориолисово ускорения точки на вращающемся диске', readout: true,
+    controls: ctl(slider('f4-w', 'ω', 0.3, 1.5, 0.05, 1) + slider('f4-v', 'v′', 0, 1.5, 0.05, 0.8) + slider('f4-r', 'R', 0.2, 1, 0.05, 0.7)),
+    cap: String.raw`Диск вращается против часовой стрелки, точка равномерно едет по нему от центра ($\vec a\,'=0$, $\vec\beta=0$, $\vec a_0=0$). Относительно лаборатории у неё два ускорения: центростремительное $\omega^2R$ к оси и кориолисово $2\omega v'$ поперёк радиуса, в сторону вращения. Пунктир — их сумма. Силы инерции из §5 — эти же ускорения с минусом, умноженные на $m$.`,
+    build(svg, f, out) {
+      const C = [190, 175], Rd = 140, phi = Math.PI / 6;
+      S('circle', { cx: C[0], cy: C[1], r: Rd, class: 'f-soft s-rule' }, svg);
+      for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3; S('line', { x1: C[0], y1: C[1], x2: C[0] + Rd * Math.cos(a), y2: C[1] - Rd * Math.sin(a), class: 's-grid' }, svg); }
+      const ra = Rd + 12, b1 = -1.95, b2 = -1.2;
+      S('path', { d: `M ${C[0] + ra * Math.cos(b1)} ${C[1] - ra * Math.sin(b1)} A ${ra} ${ra} 0 0 0 ${C[0] + ra * Math.cos(b2)} ${C[1] - ra * Math.sin(b2)}`, class: 's-main', 'marker-end': 'url(#ah-accent)' }, svg);
+      T(svg, C[0] + 6, C[1] + ra + 22, 'ω', 'f-accent');
+      [['скорость по диску v′', 's-ink', 40], ['центростремительное ω²R', 's-main', 70], ['кориолисово 2ωv′', 's-pen', 100], ['сумма', 's-ink s-dash', 130]].forEach(r => {
+        S('line', { x1: 370, y1: r[2], x2: 398, y2: r[2], class: r[1] }, svg); T(svg, 406, r[2] + 5, r[0], 't-small');
+      });
+      const g = S('g', {}, svg);
+      onInput(f, ['f4-w', 'f4-v', 'f4-r'], () => {
+        const w = val(f, 'f4-w'), v = val(f, 'f4-v'), r = val(f, 'f4-r'); clear(g);
+        show(f, 'f4-w', num(w, 2)); show(f, 'f4-v', num(v, 2)); show(f, 'f4-r', num(r, 2));
+        const p = [C[0] + r * Rd * Math.cos(phi), C[1] - r * Rd * Math.sin(phi)];
+        const er = [Math.cos(phi), -Math.sin(phi)], ef = [-Math.sin(phi), -Math.cos(phi)], sc = 24;
+        const ac = w * w * r, acor = 2 * w * v;
+        arr(g, p[0], p[1], p[0] + er[0] * 50 * v, p[1] + er[1] * 50 * v, 's-ink');
+        const A = [-er[0] * sc * ac, -er[1] * sc * ac], B = [ef[0] * sc * acor, ef[1] * sc * acor];
+        arr(g, p[0], p[1], p[0] + A[0], p[1] + A[1], 's-main');
+        arr(g, p[0], p[1], p[0] + B[0], p[1] + B[1], 's-pen');
+        arr(g, p[0], p[1], p[0] + A[0] + B[0], p[1] + A[1] + B[1], 's-ink s-dash');
+        S('circle', { cx: p[0], cy: p[1], r: 6, class: 'f-ink' }, g);
+        out.textContent = `ω²R = ${num(ac, 2)}, 2ωv′ = ${num(acor, 2)}, полное |a| = ${num(Math.hypot(ac, acor), 2)} (радиус диска = 1).`;
+      });
+    }
+  });
+
+  /* §6 гантель под углом к оси */
+  addFig('p6', {
+    tag: 'Поиграй', vb: '0 0 560 320', label: 'Гантель под углом к оси вращения: момент импульса не совпадает с угловой скоростью', readout: true,
+    controls: ctl(slider('f6-b', 'Угол стержня к оси β', 0, 90, 1, 50)),
+    cap: String.raw`Две одинаковые массы на стержне вращаются вокруг вертикальной оси. Момент импульса $\vec L$ (красный) перпендикулярен стержню и в общем случае не совпадает с $\vec\omega$. Мешает центробежный момент инерции $\vec I_z=-\int z\vec R\,dm$. При $\beta=90^\circ$ тело симметрично относительно оси, $\vec I_z=0$ и $\vec L=I\vec\omega$: это симметричный волчок.`,
+    build(svg, f, out) {
+      const C = [230, 170], l = 110;
+      S('line', { x1: C[0], y1: 312, x2: C[0], y2: 62, class: 's-ax s-dash' }, svg);
+      arr(svg, C[0], 62, C[0], 18, 's-main'); T(svg, C[0] + 8, 28, 'ω', 'f-accent');
+      const g = S('g', {}, svg);
+      onInput(f, ['f6-b'], () => {
+        const bd = val(f, 'f6-b'), b = bd * Math.PI / 180; show(f, 'f6-b', bd + '°'); clear(g);
+        const dx = l * Math.sin(b), dz = l * Math.cos(b), A = [C[0] + dx, C[1] - dz], B = [C[0] - dx, C[1] + dz];
+        if (dx > 3) { S('ellipse', { cx: C[0], cy: A[1], rx: dx, ry: dx * 0.18, class: 's-grid' }, g); S('ellipse', { cx: C[0], cy: B[1], rx: dx, ry: dx * 0.18, class: 's-grid' }, g); }
+        S('line', { x1: A[0], y1: A[1], x2: B[0], y2: B[1], class: 's-ink' }, g);
+        S('circle', { cx: A[0], cy: A[1], r: 10, class: 'f-ink' }, g); S('circle', { cx: B[0], cy: B[1], r: 10, class: 'f-ink' }, g);
+        if (bd > 3) {
+          const pr = 40;
+          S('path', { d: `M ${C[0]} ${C[1] - pr} A ${pr} ${pr} 0 0 1 ${C[0] + pr * Math.sin(b)} ${C[1] - pr * Math.cos(b)}`, class: 's-ax' }, g);
+          T(g, C[0] + 6, C[1] - pr - 6, 'β', 't-small');
+        }
+        const Ll = 120 * Math.sin(b), d = [-Math.cos(b), Math.sin(b)];
+        if (arr(g, C[0], C[1], C[0] + d[0] * Ll, C[1] - d[1] * Ll, 's-pen')) T(g, C[0] + d[0] * Ll - 20, C[1] - d[1] * Ll - 6, 'L', 'f-pen');
+        let msg;
+        if (bd === 0) msg = 'β = 0°: массы лежат на оси, момент инерции и L равны нулю.';
+        else if (bd === 90) msg = 'β = 90°: тело симметрично относительно оси, I_z = 0, L ∥ ω. Это симметричный волчок.';
+        else msg = `Угол между L и ω: ${90 - bd}°. I_zz ∝ sin²β = ${num(Math.sin(b) ** 2, 2)}, |I_z| ∝ sinβ·cosβ = ${num(Math.sin(b) * Math.cos(b), 2)}. L вращается вместе с телом, поэтому ось нагружена моментом сил.`;
+        out.textContent = msg;
+      });
+    }
+  });
+
+  /* Дополнение: элементы площади и объёма */
+  addFig('pD', {
+    tag: 'Схема', vb: '0 0 600 300', label: 'Элемент площади в полярных координатах и сферические координаты',
+    cap: String.raw`Слева элемент площади в цилиндрических координатах: «почти прямоугольник» со сторонами $dR$ и $R\,d\alpha$, отсюда $dS_z=R\,d\alpha\,dR$. Справа сферические координаты: точка на параллели радиуса $r\sin\theta$, поэтому шаг по долготе равен $r\sin\theta\,d\alpha$, по меридиану $r\,d\theta$, а $dV=r^2\sin\theta\,dr\,d\theta\,d\alpha$.`,
+    build(svg) {
+      const C = [160, 150], pol = (r, a) => [C[0] + r * Math.cos(a), C[1] - r * Math.sin(a)];
+      for (let i = 1; i <= 5; i++) S('circle', { cx: C[0], cy: C[1], r: 25 * i, class: 's-grid' }, svg);
+      for (let k = 0; k < 12; k++) { const q = pol(125, k * Math.PI / 6); S('line', { x1: C[0], y1: C[1], x2: q[0], y2: q[1], class: 's-grid' }, svg); }
+      const a1 = Math.PI / 6, a2 = 50 * Math.PI / 180, ri = 75, ro = 100;
+      const p = (r, a) => pol(r, a).map(v => v.toFixed(1)).join(' ');
+      S('path', { d: `M ${p(ri, a1)} L ${p(ro, a1)} A ${ro} ${ro} 0 0 0 ${p(ro, a2)} L ${p(ri, a2)} A ${ri} ${ri} 0 0 1 ${p(ri, a1)} Z`, class: 'f-pen-soft s-pen s-thin' }, svg);
+      [a1, a2].forEach(a => { const q = pol(ri, a); S('line', { x1: C[0], y1: C[1], x2: q[0], y2: q[1], class: 's-ax s-dash' }, svg); });
+      let q = pol(88, a1 - 0.1); T(svg, q[0], q[1] + 4, 'dR', 'f-pen');
+      q = pol(112, 0.7); T(svg, q[0], q[1], 'R dα', 'f-pen');
+      q = pol(38, 0.7); T(svg, q[0], q[1], 'dα', 't-small');
+      S('circle', { cx: C[0], cy: C[1], r: 3, class: 'f-muted' }, svg);
+      const K = [440, 150], Rs = 110, th = 50 * Math.PI / 180;
+      S('circle', { cx: K[0], cy: K[1], r: Rs, class: 's-ax' }, svg);
+      S('ellipse', { cx: K[0], cy: K[1], rx: Rs, ry: 28, class: 's-grid' }, svg);
+      S('line', { x1: K[0], y1: K[1] - Rs - 12, x2: K[0], y2: K[1] + Rs + 8, class: 's-ax s-dash' }, svg);
+      T(svg, K[0] + 6, K[1] - Rs - 2, 'N', 't-small');
+      const zc = K[1] - Rs * Math.cos(th), rho = Rs * Math.sin(th);
+      S('ellipse', { cx: K[0], cy: zc, rx: rho, ry: rho * 0.25, class: 's-pen s-thin s-dash' }, svg);
+      const pa = -50 * Math.PI / 180, Pp = [K[0] + rho * Math.cos(pa), zc - rho * 0.25 * Math.sin(pa)];
+      S('line', { x1: K[0], y1: zc, x2: Pp[0], y2: Pp[1], class: 's-pen s-thin' }, svg);
+      T(svg, K[0] - 70, zc - 10, 'r sin θ', 'f-pen');
+      arr(svg, K[0], K[1], Pp[0], Pp[1], 's-main'); T(svg, (K[0] + Pp[0]) / 2 + 8, (K[1] + Pp[1]) / 2 + 12, 'r', 'f-accent');
+      const ang = Math.atan2(K[1] - Pp[1], Pp[0] - K[0]), pr = 30;
+      S('path', { d: `M ${K[0]} ${K[1] - pr} A ${pr} ${pr} 0 0 1 ${K[0] + pr * Math.cos(ang)} ${K[1] - pr * Math.sin(ang)}`, class: 's-ax' }, svg);
+      T(svg, K[0] + 6, K[1] - 36, 'θ', 't-small');
+      S('circle', { cx: Pp[0], cy: Pp[1], r: 5, class: 'f-ink' }, svg);
+      T(svg, K[0] + Rs - 4, K[1] + 46, 'экватор', 't-small');
+    }
+  });
+
+  /* §7 момент силы и плечо */
+  addFig('p7', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Момент силы и плечо', readout: true,
+    controls: ctl(slider('f7-a', 'Угол между r и F', 0, 180, 1, 60)),
+    cap: String.raw`Плечо $\ell$ — кратчайшее расстояние от точки O до линии действия силы (пунктир), $\ell=r\sin\theta$. Момент $N=\ell F=rF\sin\theta$, вектор $\vec N=\vec r\times\vec F$. Если сила направлена вдоль $\vec r$, плечо и момент равны нулю.`,
+    build(svg, f, out) {
+      const O = [110, 210], A = [350, 140], r = [A[0] - O[0], A[1] - O[1]], rl = Math.hypot(r[0], r[1]);
+      const base = Math.atan2(-r[1], r[0]);
+      const g = S('g', {}, svg);
+      onInput(f, ['f7-a'], () => {
+        const pd = val(f, 'f7-a'), ps = pd * Math.PI / 180; show(f, 'f7-a', pd + '°'); clear(g);
+        const d = [Math.cos(base + ps), -Math.sin(base + ps)];
+        S('line', { x1: A[0] - d[0] * 600, y1: A[1] - d[1] * 600, x2: A[0] + d[0] * 600, y2: A[1] + d[1] * 600, class: 's-ax s-dash' }, g);
+        const t = (O[0] - A[0]) * d[0] + (O[1] - A[1]) * d[1], H = [A[0] + d[0] * t, A[1] + d[1] * t];
+        if (Math.hypot(H[0] - O[0], H[1] - O[1]) > 4) {
+          S('line', { x1: O[0], y1: O[1], x2: H[0], y2: H[1], class: 's-main' }, g);
+          T(g, (O[0] + H[0]) / 2 - 18, (O[1] + H[1]) / 2 + 4, 'ℓ', 'f-accent');
+        }
+        arr(g, O[0], O[1], A[0], A[1], 's-ink'); T(g, (O[0] + A[0]) / 2 + 4, (O[1] + A[1]) / 2 + 22, 'r');
+        arr(g, A[0], A[1], A[0] + d[0] * 110, A[1] + d[1] * 110, 's-pen'); T(g, A[0] + d[0] * 122, A[1] + d[1] * 122 + 4, 'F', 'f-pen');
+        S('circle', { cx: O[0], cy: O[1], r: 5, class: 'f-ink' }, g); T(g, O[0] - 20, O[1] + 20, 'O');
+        const s = Math.sin(ps);
+        if (Math.abs(s) > 0.05) {
+          const rr = 34, sweep = s > 0 ? 0 : 1, a0 = s > 0 ? -2.2 : -0.9, a1 = s > 0 ? -0.9 : -2.2;
+          S('path', { d: `M ${O[0] + rr * Math.cos(a0)} ${O[1] - rr * Math.sin(a0)} A ${rr} ${rr} 0 0 ${sweep} ${O[0] + rr * Math.cos(a1)} ${O[1] - rr * Math.sin(a1)}`, class: 's-pen s-thin', 'marker-end': 'url(#ah-pen)' }, g);
+        }
+        out.textContent = Math.abs(s) < 0.01
+          ? 'Сила вдоль радиус-вектора: плечо 0, момента нет.'
+          : `Плечо ℓ = r sin θ = ${num(Math.abs(s), 2)}·r, момент N = rF sin θ = ${num(Math.abs(s), 2)}·rF. Поворачивает ${s > 0 ? 'против часовой стрелки, вектор N направлен на нас' : 'по часовой стрелке, вектор N направлен от нас'}.`;
+      });
+    }
+  });
+
+  /* §8 центр масс и центр тяжести */
+  addFig('p8', {
+    tag: 'Поиграй', vb: '0 0 560 250', label: 'Центр масс и центр тяжести двух грузов на стержне', readout: true,
+    controls: ctl(slider('f8-m', 'Масса правого груза m₂ / m₁', 0.2, 5, 0.1, 2) + '<label for="f8-g"><input type="checkbox" id="f8-g"> Курская аномалия: справа g больше</label>'),
+    cap: String.raw`Опора стоит в центре масс C: в однородном поле момент сил тяжести относительно C равен нулю, и стержень в равновесии. Включи аномалию: $g$ растёт вправо, центр тяжести T уезжает к тяжёлому краю, а центр масс остаётся на месте. Это пример автора с мостом.`,
+    build(svg, f, out) {
+      const x1 = 70, x2 = 490, y = 120, cb = f.querySelector('#f8-g');
+      const g = S('g', {}, svg);
+      function upd() {
+        const m2 = val(f, 'f8-m'), m1 = 1, an = cb.checked; show(f, 'f8-m', num(m2, 1)); clear(g);
+        const gf = x => an ? 1 + 0.6 * (x - x1) / (x2 - x1) : 1;
+        const xc = (m1 * x1 + m2 * x2) / (m1 + m2), xt = (m1 * gf(x1) * x1 + m2 * gf(x2) * x2) / (m1 * gf(x1) + m2 * gf(x2));
+        S('line', { x1, y1: y, x2, y2: y, class: 's-ink' }, g);
+        [[x1, m1], [x2, m2]].forEach(q => {
+          const rr = 10 * Math.sqrt(q[1]);
+          arr(g, q[0], y, q[0], y + Math.min(110, 30 * q[1] * gf(q[0])), 's-pen');
+          S('circle', { cx: q[0], cy: y, r: rr, class: 'f-ink' }, g);
+        });
+        T(g, x1, y - 34, 'm₁', '', 'middle'); T(g, x2, y - 14 - 10 * Math.sqrt(m2), 'm₂', '', 'middle');
+        S('polygon', { points: P([[xc, y + 6], [xc - 14, y + 32], [xc + 14, y + 32]]), class: 'f-accent' }, g);
+        T(g, xc, y + 52, 'C — центр масс', 'f-accent', 'middle');
+        if (an) { S('circle', { cx: xt, cy: y, r: 6, class: 'f-pen' }, g); T(g, xt, y - 16, 'T — центр тяжести', 'f-pen', 'middle'); }
+        const pc = (xc - x1) / (x2 - x1) * 100, pt = (xt - x1) / (x2 - x1) * 100;
+        out.textContent = an
+          ? `Центр масс: ${num(pc, 0)}% длины от левого края, центр тяжести: ${num(pt, 0)}%. Момент сил тяжести относительно C уже не ноль: стержень перевесит вправо.`
+          : `Центр масс: ${num(pc, 0)}% длины от левого края. Поле однородное, момент сил тяжести относительно C равен нулю, центр тяжести совпадает с C.`;
+      }
+      f.querySelector('#f8-m').addEventListener('input', upd); cb.addEventListener('change', upd); upd();
+    }
+  });
+
+  /* §9 цилиндр из трубок */
+  addFig('p9', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Момент инерции цилиндра как сумма тонких трубок', readout: true,
+    controls: ctl(slider('f9-n', 'Число трубок N', 1, 40, 1, 5)),
+    cap: String.raw`Цилиндр разбит на $N$ трубок, масса каждой пропорциональна площади её колечка $2\pi r\,dr$. Одна трубка — это кольцо, $I=mR^2$. Чем тоньше трубки, тем ближе сумма к интегралу $\frac{mR^2}{2}$. Справа видно, как сумма подходит к 0,5.`,
+    build(svg, f, out) {
+      const C = [150, 150], R = 125;
+      const IN = N => { let s = 0; for (let i = 1; i <= N; i++) s += ((i / N) ** 2 - ((i - 1) / N) ** 2) * (i / N) ** 2; return s; };
+      const X = lin(1, 40, 330, 540), Y = lin(0.4, 1.05, 270, 30);
+      S('line', { x1: 320, y1: 270, x2: 548, y2: 270, class: 's-ax' }, svg); S('line', { x1: 320, y1: 270, x2: 320, y2: 24, class: 's-ax' }, svg);
+      S('line', { x1: 320, y1: Y(0.5), x2: 545, y2: Y(0.5), class: 's-main s-dash s-thin' }, svg);
+      T(svg, 545, Y(0.5) - 8, 'точно: 0,5', 'f-accent', 'end'); T(svg, 545, 288, 'N', 't-small', 'end'); T(svg, 326, 22, 'I / mR²', 't-small');
+      T(svg, 314, Y(1) + 4, '1', 't-small', 'end'); T(svg, 314, Y(0.5) + 4, '0,5', 't-small', 'end');
+      for (let n = 1; n <= 40; n++) S('circle', { cx: X(n), cy: Y(IN(n)), r: 2, class: 'f-muted' }, svg);
+      const g = S('g', {}, svg);
+      onInput(f, ['f9-n'], () => {
+        const N = val(f, 'f9-n'); show(f, 'f9-n', String(N)); clear(g);
+        const k = Math.max(1, Math.round(0.7 * N)), ro = R * k / N, ri = R * (k - 1) / N;
+        const ring = r => `M ${C[0] - r} ${C[1]} a ${r} ${r} 0 1 0 ${2 * r} 0 a ${r} ${r} 0 1 0 ${-2 * r} 0 Z`;
+        S('path', { d: ring(ro) + (ri > 0 ? ' ' + ring(ri) : ''), 'fill-rule': 'evenodd', class: 'f-pen-soft' }, g);
+        for (let i = 1; i <= N; i++) S('circle', { cx: C[0], cy: C[1], r: R * i / N, class: i === N ? 's-main' : 's-rule', fill: 'none' }, g);
+        S('circle', { cx: C[0], cy: C[1], r: 3, class: 'f-muted' }, g);
+        const I = IN(N);
+        S('circle', { cx: X(N), cy: Y(I), r: 6, class: 'f-pen' }, g);
+        out.textContent = `${N} ${N === 1 ? 'трубка' : (N < 5 ? 'трубки' : 'трубок')}: I ≈ ${num(I, 3)}·mR² (масса трубки на её внешнем радиусе). Точно: 0,5·mR².`;
+      });
+    }
+  });
+
+  /* §11 Юкава и Кулон */
+  addFig('p11', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Потенциал Юкавы и кулоновский потенциал', readout: true,
+    controls: ctl(slider('f11-r', 'Радиус взаимодействия R', 0.2, 3, 0.05, 1)),
+    cap: String.raw`Пунктир — кулоновская энергия $\propto 1/r$ (переносчик фотон, масса 0, радиус бесконечный). Синяя — формула Юкавы $\propto e^{-r/R}/r$: за пределами $R=\hbar/mc$ она быстро гаснет. Чем тяжелее переносчик, тем меньше $R$. Поэтому сильное и слабое взаимодействия короткодействующие.`,
+    build(svg, f, out) {
+      const X = lin(0, 5, 50, 540), Y = lin(0, 4, 280, 20);
+      S('line', { x1: 50, y1: 280, x2: 548, y2: 280, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      S('line', { x1: 50, y1: 280, x2: 50, y2: 14, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      T(svg, 540, 272, 'r', 't-small', 'end'); T(svg, 58, 20, 'W', 't-small');
+      const pts = []; for (let r = 0.05; r <= 5; r += 0.02) pts.push([r, 1 / r]);
+      plotLine(svg, pts, X, Y, 's-ink s-dash', 0, 4);
+      T(svg, X(3.6), Y(1 / 3.6) - 10, 'Кулон 1/r', 't-small');
+      const g = S('g', {}, svg);
+      onInput(f, ['f11-r'], () => {
+        const R = val(f, 'f11-r'); show(f, 'f11-r', num(R, 2)); clear(g);
+        const q = []; for (let r = 0.05; r <= 5; r += 0.02) q.push([r, Math.exp(-r / R) / r]);
+        plotLine(g, q, X, Y, 's-main', 0, 4);
+        S('line', { x1: X(R), y1: 280, x2: X(R), y2: 30, class: 's-pen s-thin s-dash' }, g);
+        T(g, X(R) + 6, 44, 'R = ħ/mc', 'f-pen');
+        out.textContent = `На расстоянии r = 2 юкавский потенциал слабее кулоновского в ${num(Math.exp(2 / R), 1)} раза.`;
+      });
+    }
+  });
+
+  /* §12 работа по разным путям */
+  addFig('p12', {
+    tag: 'Поиграй', vb: '0 0 560 380', label: 'Работа силы по трём путям из точки 1 в точку 2', readout: true,
+    controls: '<div class="controls"><label for="f12-c"><input type="radio" name="f12" id="f12-c" value="c" checked> F = (x, 2y), консервативная</label><label for="f12-v"><input type="radio" name="f12" id="f12-v" value="v"> F = (−y, x), вихрь</label></div>',
+    cap: String.raw`Три пути из точки 1 в точку 2, работа $A=\int\vec F\cdot d\vec\ell$ посчитана по каждому. Для консервативной силы все три работы равны: работа зависит только от концов. Для вихря работы разные, сила неконсервативна, и по замкнутому пути работа не равна нулю.`,
+    build(svg, f, out) {
+      const s = 95, X = x => 280 + x * s, Y = y => 190 - y * s;
+      const P1 = [-1.5, -1], P2 = [1.5, 0.5];
+      const paths = [
+        { n: 'a', pts: [P1, P2], cls: 's-ink' },
+        { n: 'b', pts: [P1, [1.5, -1], P2], cls: 's-main' },
+        { n: 'c', pts: [P1, [-1.5, 0.5], P2], cls: 's-pen' }
+      ];
+      const g = S('g', {}, svg);
+      function work(F, pts) {
+        let A = 0;
+        for (let i = 1; i < pts.length; i++) {
+          const a = pts[i - 1], b = pts[i], n = 400, dx = (b[0] - a[0]) / n, dy = (b[1] - a[1]) / n;
+          for (let j = 0; j < n; j++) { const x = a[0] + dx * (j + 0.5), y = a[1] + dy * (j + 0.5), fv = F(x, y); A += fv[0] * dx + fv[1] * dy; }
+        }
+        return A;
+      }
+      function upd() {
+        const cons = f.querySelector('#f12-c').checked, F = cons ? (x, y) => [x, 2 * y] : (x, y) => [-y, x];
+        clear(g);
+        for (let x = -2.5; x <= 2.51; x += 0.5) for (let y = -1.9; y <= 1.91; y += 0.5) {
+          const fv = F(x, y), m = Math.hypot(fv[0], fv[1]); if (m < 1e-6) continue;
+          const len = Math.min(0.35, 0.1 + 0.07 * m);
+          arr(g, X(x), Y(y), X(x + fv[0] / m * len), Y(y + fv[1] / m * len), 's-ax s-thin');
+        }
+        const A = paths.map(p => {
+          const pp = p.pts.map(q => [X(q[0]), Y(q[1])]);
+          S('polyline', { points: P(pp), class: p.cls, 'marker-end': `url(#${MK[p.cls]})` }, g);
+          const mid = p.pts.length === 2 ? [(p.pts[0][0] + p.pts[1][0]) / 2, (p.pts[0][1] + p.pts[1][1]) / 2] : p.pts[1];
+          T(g, X(mid[0]) + 10, Y(mid[1]) + (p.n === 'b' ? 20 : -8), p.n, p.cls === 's-ink' ? '' : (p.cls === 's-main' ? 'f-accent' : 'f-pen'));
+          return work(F, p.pts);
+        });
+        [P1, P2].forEach((q, i) => { S('circle', { cx: X(q[0]), cy: Y(q[1]), r: 6, class: 'f-ink' }, g); T(g, X(q[0]) - 20, Y(q[1]) + 6, String(i + 1)); });
+        const same = Math.max(...A) - Math.min(...A) < 1e-3;
+        out.textContent = `A(a) = ${num(A[0], 2)}, A(b) = ${num(A[1], 2)}, A(c) = ${num(A[2], 2)}. ` + (same
+          ? 'Одинаково: сила консервативна.'
+          : `Разные: сила неконсервативна. По замкнутому пути «туда по b, обратно по c» работа ${num(A[1] - A[2], 2)}, а не 0.`);
+      }
+      f.querySelectorAll('input[name="f12"]').forEach(i => i.addEventListener('change', upd)); upd();
+    }
+  });
+
+  /* §13 работа как площадь */
+  addFig('p13', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Работа силы как площадь под графиком и рост кинетической энергии', readout: true,
+    controls: ctl(slider('f13-x', 'Пройдено x', 0, 4, 0.02, 2)),
+    cap: String.raw`Сила вдоль пути $F(x)=\cos(\pi x/4)$: сначала толкает, потом тормозит. Работа — площадь под графиком со знаком: синяя часть плюс, красная минус. Столбик справа — кинетическая энергия, $K_2=K_1+A$. Это теорема о кинетической энергии.`,
+    build(svg, f, out) {
+      const X = lin(0, 4, 50, 380), Y = lin(-1.2, 1.2, 270, 30), YK = lin(0, 2.6, 270, 30);
+      S('line', { x1: 50, y1: Y(0), x2: 392, y2: Y(0), class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      S('line', { x1: 50, y1: 280, x2: 50, y2: 22, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      T(svg, 386, Y(0) - 8, 'x', 't-small', 'end'); T(svg, 58, 30, 'F', 't-small');
+      const F = x => Math.cos(Math.PI * x / 4), curve = [];
+      for (let x = 0; x <= 4.0001; x += 0.02) curve.push([X(x), Y(F(x))]);
+      S('line', { x1: 440, y1: 270, x2: 520, y2: 270, class: 's-ax' }, svg);
+      S('line', { x1: 430, y1: YK(1), x2: 530, y2: YK(1), class: 's-ax s-dash' }, svg);
+      T(svg, 534, YK(1) + 4, 'K₁', 't-small');
+      const g = S('g', {}, svg);
+      onInput(f, ['f13-x'], () => {
+        const x = val(f, 'f13-x'); show(f, 'f13-x', num(x, 2)); clear(g);
+        const pos = [[X(0), Y(0)]], neg = [[X(0), Y(0)]];
+        for (let t = 0; t <= x + 1e-9; t += 0.02) { pos.push([X(t), Y(Math.max(0, F(t)))]); neg.push([X(t), Y(Math.min(0, F(t)))]); }
+        pos.push([X(x), Y(0)]); neg.push([X(x), Y(0)]);
+        S('polygon', { points: P(pos), class: 'f-soft' }, g); S('polygon', { points: P(neg), class: 'f-pen-soft' }, g);
+        S('polyline', { points: P(curve), class: 's-main' }, g);
+        S('line', { x1: X(x), y1: 30, x2: X(x), y2: 270, class: 's-pen s-thin s-dash' }, g);
+        const A = 4 / Math.PI * Math.sin(Math.PI * x / 4), K2 = 1 + A;
+        S('rect', { x: 450, y: YK(K2), width: 60, height: YK(0) - YK(K2), class: 'f-soft s-main-thin' }, g);
+        T(g, 480, YK(K2) - 8, 'K₂', 'f-accent', 'middle');
+        out.textContent = `A = ${num(A, 2)}, K₂ = K₁ + A = ${num(K2, 2)}, скорость v₂ = ${num(Math.sqrt(2 * K2), 2)} (m = 1, K₁ = 1).`;
+      });
+    }
+  });
+
+  /* §14 катящийся диск */
+  addFig('p14', {
+    tag: 'Анимация', vb: '0 0 560 260', label: 'Скорости точек катящегося диска',
+    controls: '<div class="controls"><button class="btn" id="f14-b" type="button">Пауза</button></div>',
+    cap: String.raw`Диск катится без проскальзывания. Скорость любой точки равна $\vec v_C+\vec\omega\times\vec r_C$: сверху $2v$, в точке касания 0, по бокам $v\sqrt2$ под углом $45^\circ$. Красная метка на ободе рисует циклоиду. Её скорость (стрелка от метки) всегда перпендикулярна пунктиру к точке касания: в каждый момент диск как бы поворачивается вокруг этой точки. По Кёнигу $K=\frac{mv_C^2}{2}+\frac{I_C\omega^2}{2}$. Для диска $I_C=\frac{mR^2}{2}$ и $\omega=v/R$, так что $K=\frac34mv^2$.`,
+    build(svg, f) {
+      const gy = 225, R = 60, cy = gy - R, x0 = 80, x1 = 80 + 2 * Math.PI * R, vpx = 70, sc = 38;
+      S('line', { x1: 10, y1: gy, x2: 550, y2: gy, class: 's-ink' }, svg);
+      for (let t = 20; t < 550; t += 30) S('line', { x1: t, y1: gy, x2: t - 8, y2: gy + 8, class: 's-ax s-thin' }, svg);
+      const trail = S('polyline', { class: 's-pen s-thin s-dash' }, svg);
+      const disk = S('circle', { cy, r: R, class: 'f-soft s-main-thin' }, svg);
+      const spokes = [0, 1, 2, 3].map(() => S('line', { class: 's-main-thin' }, svg));
+      const g = S('g', {}, svg);
+      const mark = (x, a) => [x + R * Math.cos(a), cy + R * Math.sin(a)];
+      function draw(x) {
+        const phi = (x - x0) / R;
+        disk.setAttribute('cx', x);
+        spokes.forEach((l, k) => { const a = phi + k * Math.PI / 2; l.setAttribute('x1', x); l.setAttribute('y1', cy); l.setAttribute('x2', x + R * Math.cos(a)); l.setAttribute('y2', cy + R * Math.sin(a)); });
+        const a0 = Math.PI / 2, pts = [];
+        for (let s = x0; s <= x + 0.5; s += 2) pts.push(mark(s, a0 + (s - x0) / R));
+        trail.setAttribute('points', P(pts));
+        clear(g);
+        arr(g, x, cy, x + sc, cy, 's-main'); T(g, x + sc + 4, cy + 16, 'v', 'f-accent');
+        arr(g, x, cy - R, x + 2 * sc, cy - R, 's-pen s-thin'); T(g, x + 2 * sc + 4, cy - R + 5, '2v', 'f-pen');
+        arr(g, x + R, cy, x + R + sc, cy + sc, 's-pen s-thin'); arr(g, x - R, cy, x - R + sc, cy - sc, 's-pen s-thin');
+        S('circle', { cx: x, cy: gy, r: 4, class: 'f-pen' }, g); T(g, x - 8, gy + 22, 'v = 0', 'f-pen', 'end');
+        S('circle', { cx: x, cy, r: 3, class: 'f-accent' }, g);
+        const a = a0 + phi, m = mark(x, a);
+        S('line', { x1: x, y1: gy, x2: m[0], y2: m[1], class: 's-ax s-dash' }, g);
+        arr(g, m[0], m[1], m[0] + sc * (1 - Math.sin(a)), m[1] + sc * Math.cos(a), 's-ink');
+        S('circle', { cx: m[0], cy: m[1], r: 7, class: 'f-pen' }, g);
+      }
+      const btn = f.querySelector('#f14-b');
+      let playing = !reduce, last = null, x = reduce ? x0 + 1.3 * Math.PI * R : x0, hold = 0;
+      function frame(ts) {
+        if (!playing) { last = null; return; }
+        const dt = last == null ? 0 : Math.min(0.1, (ts - last) / 1000); last = ts;
+        if (x >= x1) { hold += dt; if (hold > 1.2) { x = x0; hold = 0; } } else x = Math.min(x1, x + vpx * dt);
+        draw(x); requestAnimationFrame(frame);
+      }
+      draw(x);
+      btn.textContent = playing ? 'Пауза' : 'Пуск';
+      btn.addEventListener('click', () => { playing = !playing; btn.textContent = playing ? 'Пауза' : 'Пуск'; if (playing) requestAnimationFrame(frame); });
+      if (playing) requestAnimationFrame(frame);
+    }
+  });
+
+  /* §15 — уже есть схема; §16 энергия с трением */
+  addFig('p16', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Кинетическая, потенциальная и полная энергия колебаний с трением', readout: true,
+    controls: ctl(slider('f16-g', 'Трение γ', 0, 0.6, 0.02, 0.15)),
+    cap: String.raw`Груз на пружине: $\ddot x=-x-\gamma\dot x$. Энергия перетекает из $U$ (синяя) в $K$ (красная) и обратно, а полная $W=K+U$ (толстая линия) при трении убывает. Её убыль равна работе неконсервативной силы трения: $W_2-W_1=A^{неконс}$. Поставь $\gamma=0$: система консервативна, $W=\mathrm{const}$.`,
+    build(svg, f, out) {
+      const X = lin(0, 20, 50, 540), Y = lin(0, 0.55, 270, 20);
+      S('line', { x1: 50, y1: 270, x2: 548, y2: 270, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      S('line', { x1: 50, y1: 280, x2: 50, y2: 14, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      T(svg, 540, 262, 't', 't-small', 'end'); T(svg, 58, 22, 'энергия', 't-small');
+      [['U', 's-main', 440], ['K', 's-pen', 480], ['W', 's-ink', 520]].forEach(r => { S('line', { x1: r[2] - 26, y1: 30, x2: r[2] - 6, y2: 30, class: r[1] }, svg); T(svg, r[2], 35, r[0], 't-small'); });
+      const g = S('g', {}, svg);
+      onInput(f, ['f16-g'], () => {
+        const gm = val(f, 'f16-g'); show(f, 'f16-g', num(gm, 2)); clear(g);
+        let x = 1, v = 0; const dt = 0.01, K = [], U = [], W = [];
+        const acc = (x, v) => -x - gm * v;
+        for (let i = 0; i <= 2000; i++) {
+          if (i % 4 === 0) { const t = i * dt; K.push([t, v * v / 2]); U.push([t, x * x / 2]); W.push([t, (v * v + x * x) / 2]); }
+          const k1x = v, k1v = acc(x, v), k2x = v + dt / 2 * k1v, k2v = acc(x + dt / 2 * k1x, v + dt / 2 * k1v);
+          const k3x = v + dt / 2 * k2v, k3v = acc(x + dt / 2 * k2x, v + dt / 2 * k2v), k4x = v + dt * k3v, k4v = acc(x + dt * k3x, v + dt * k3v);
+          x += dt / 6 * (k1x + 2 * k2x + 2 * k3x + k4x); v += dt / 6 * (k1v + 2 * k2v + 2 * k3v + k4v);
+        }
+        plotLine(g, U, X, Y, 's-main s-thin', 0, 1); plotLine(g, K, X, Y, 's-pen s-thin', 0, 1); plotLine(g, W, X, Y, 's-ink', 0, 1);
+        const Wend = W[W.length - 1][1];
+        out.textContent = gm === 0
+          ? 'Трения нет: W = const. Это закон сохранения энергии.'
+          : `Через 20 с осталось ${num(Wend / 0.5 * 100, 0)}% энергии. Убыль W = ${num(0.5 - Wend, 3)} — это минус работа силы трения.`;
+      });
+    }
+  });
+
+  /* §17 сила как минус наклон U(x) */
+  addFig('p17', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Потенциальная энергия U(x) и сила F = −dU/dx', readout: true,
+    controls: ctl(slider('f17-x', 'Положение x', -2.3, 2.3, 0.01, 0.8)),
+    cap: String.raw`$F_x=-\partial U/\partial x$: сила равна минус наклону графика и всегда толкает туда, где $U$ меньше. В минимумах $U$ сила ноль — это устойчивое равновесие, в максимуме — неустойчивое. В трёх измерениях то же самое записывается как $\vec F=-\nabla U$.`,
+    build(svg, f, out) {
+      const U = x => 0.25 * x ** 4 - x * x + 0.3 * x, dU = x => x ** 3 - 2 * x + 0.3;
+      const X = lin(-2.5, 2.5, 50, 540), Y = lin(-1.8, 3.4, 270, 20);
+      S('line', { x1: 40, y1: Y(0), x2: 548, y2: Y(0), class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      T(svg, 540, Y(0) - 8, 'x', 't-small', 'end');
+      const c = []; for (let x = -2.45; x <= 2.45; x += 0.02) c.push([x, U(x)]);
+      plotLine(svg, c, X, Y, 's-main', -2, 4);
+      T(svg, X(2.0), Y(U(2.0)) - 10, 'U(x)', 'f-accent', 'end');
+      const roots = []; for (let x = -2.4; x < 2.4; x += 0.01) if (dU(x) * dU(x + 0.01) < 0) { let a = x, b = x + 0.01; for (let i = 0; i < 40; i++) { const m = (a + b) / 2; if (dU(a) * dU(m) <= 0) b = m; else a = m; } roots.push((a + b) / 2); }
+      roots.forEach(r => { const st = 3 * r * r - 2 > 0; S('circle', { cx: X(r), cy: Y(U(r)), r: 4, class: st ? 'f-accent' : 'f-muted' }, svg); T(svg, X(r), Y(U(r)) + (st ? 20 : -12), st ? 'устойчиво' : 'неустойчиво', 't-small', 'middle'); });
+      const g = S('g', {}, svg);
+      onInput(f, ['f17-x'], () => {
+        const x0 = val(f, 'f17-x'); show(f, 'f17-x', num(x0, 2)); clear(g);
+        const k = dU(x0), F = -k;
+        S('line', { x1: X(x0 - 0.5), y1: Y(U(x0) - 0.5 * k), x2: X(x0 + 0.5), y2: Y(U(x0) + 0.5 * k), class: 's-pen s-thin s-dash' }, g);
+        S('line', { x1: X(x0), y1: Y(U(x0)), x2: X(x0), y2: Y(0), class: 's-grid' }, g);
+        const L = Math.max(-130, Math.min(130, 40 * F));
+        if (arr(g, X(x0), Y(0), X(x0) + L, Y(0), 's-ink')) T(g, X(x0) + L + (L > 0 ? 6 : -6), Y(0) + 18, 'F', '', L > 0 ? 'start' : 'end');
+        S('circle', { cx: X(x0), cy: Y(U(x0)), r: 6, class: 'f-pen' }, g);
+        out.textContent = Math.abs(F) < 0.05
+          ? `dU/dx ≈ 0: здесь сила почти ноль, точка равновесия.`
+          : `dU/dx = ${num(k, 2)}, сила F = −dU/dx = ${num(F, 2)}: толкает ${F > 0 ? 'вправо' : 'влево'}, туда, где U меньше.`;
+      });
+    }
+  });
+
+  /* §18 три поля: div и rot */
+  addFig('p18', {
+    tag: 'Схема', vb: '0 0 600 240', label: 'Три векторных поля: источник, вихрь и сдвиг',
+    cap: String.raw`Слева источник $\vec A=(x,y)$: стрелки расходятся, $\mathrm{div}\,\vec A=2$, вращения нет. В центре вихрь $(-y,x)$: стрелки крутятся, $\mathrm{rot}\,\vec A=2\vec e_z$, расхождения нет. Справа сдвиг $(y,0)$: на вид закручивания нет, но $\mathrm{rot}=-\vec e_z$. Колесо с лопатками, брошенное в такой поток, закрутится. По двум формулам из §18 это проверяется за минуту.`,
+    build(svg) {
+      const fields = [[(x, y) => [x, y], 'источник: div = 2, rot = 0'], [(x, y) => [-y, x], 'вихрь: div = 0, rot = 2'], [(x, y) => [y, 0], 'сдвиг: div = 0, rot = −1']];
+      fields.forEach((fd, i) => {
+        const cx = 100 + 200 * i, cy = 105, s = 75;
+        S('rect', { x: cx - 92, y: cy - 92, width: 184, height: 184, rx: 6, class: 'f-none s-rule' }, svg);
+        for (let x = -1; x <= 1.01; x += 0.4) for (let y = -1; y <= 1.01; y += 0.4) {
+          const v = fd[0](x, y), m = Math.hypot(v[0], v[1]); if (m < 1e-6) continue;
+          const len = Math.min(0.28, 0.08 + 0.15 * m);
+          arr(svg, cx + x * s, cy - y * s, cx + (x + v[0] / m * len) * s, cy - (y + v[1] / m * len) * s, 's-main s-thin');
+        }
+        T(svg, cx, 222, fd[1], 't-small', 'middle');
+      });
+    }
+  });
+
+  /* §19 смешанное произведение */
+  addFig('p19', {
+    tag: 'Схема', vb: '0 0 560 280', label: 'Параллелепипед на трёх векторах и смешанное произведение',
+    cap: String.raw`Смешанное произведение $\vec X\cdot[\vec Y\times\vec Z]$ — объём этого параллелепипеда. При циклической перестановке объём не меняется: $\vec X\cdot[\vec Y\times\vec Z]=[\vec X\times\vec Y]\cdot\vec Z$. Подставь $\vec X=\vec Y=\nabla$: получится $[\nabla\times\nabla]\cdot\vec B=0$, то есть $\mathrm{div}\,\mathrm{rot}\,\vec B=0$. Параллелепипед на двух одинаковых векторах плоский, его объём ноль.`,
+    build(svg) {
+      const O = [150, 230], Xv = [190, 0], Yv = [80, -60], Zv = [30, -140];
+      const add = (...v) => v.reduce((a, b) => [a[0] + b[0], a[1] + b[1]], [0, 0]);
+      const pO = O, pX = add(O, Xv), pY = add(O, Yv), pZ = add(O, Zv), pXY = add(O, Xv, Yv), pXZ = add(O, Xv, Zv), pYZ = add(O, Yv, Zv), pXYZ = add(O, Xv, Yv, Zv);
+      S('polygon', { points: P([pO, pX, pXY, pY]), class: 'f-soft s-rule' }, svg);
+      [[pY, pXY], [pY, pYZ], [pXY, pXYZ], [pX, pXZ], [pZ, pXZ], [pZ, pYZ], [pXZ, pXYZ], [pYZ, pXYZ], [pX, pXY]].forEach(e => S('line', { x1: e[0][0], y1: e[0][1], x2: e[1][0], y2: e[1][1], class: 's-ax' }, svg));
+      arr(svg, pO[0], pO[1], pX[0], pX[1], 's-main'); T(svg, pX[0] - 10, pX[1] + 22, 'X', 'f-accent');
+      arr(svg, pO[0], pO[1], pY[0], pY[1], 's-pen'); T(svg, pY[0] + 6, pY[1] + 16, 'Y', 'f-pen');
+      arr(svg, pO[0], pO[1], pZ[0], pZ[1], 's-ink'); T(svg, pZ[0] - 22, pZ[1] + 4, 'Z');
+      T(svg, 500, 120, 'объём =', 't-small', 'middle'); T(svg, 500, 142, 'X·[Y×Z]', '', 'middle'); T(svg, 500, 164, '= [X×Y]·Z', '', 'middle');
+    }
+  });
+
+  /* §21 симметрии и законы */
+  addFig('p21', {
+    tag: 'Схема', vb: '0 0 600 290', label: 'Три симметрии пространства-времени и три закона сохранения',
+    cap: String.raw`Слева то, что можно сделать с системой, не меняя её поведения. Справа закон сохранения, который из этого следует. Связь в общем виде доказала Эмми Нётер в 1918 г.`,
+    build(svg) {
+      T(svg, 375, 20, 'теорема Нётер (1918)', 't-small', 'middle');
+      const rows = [55, 145, 235];
+      const c1 = [60, rows[0]];
+      S('circle', { cx: c1[0], cy: c1[1], r: 26, class: 'f-soft s-main-thin' }, svg);
+      S('line', { x1: c1[0], y1: c1[1], x2: c1[0], y2: c1[1] - 18, class: 's-ink' }, svg);
+      S('line', { x1: c1[0], y1: c1[1], x2: c1[0] + 13, y2: c1[1] + 5, class: 's-ink' }, svg);
+      const c2 = [40, rows[1] + 20];
+      arr(svg, c2[0], c2[1], c2[0] + 40, c2[1], 's-ax'); arr(svg, c2[0], c2[1], c2[0], c2[1] - 40, 's-ax');
+      arr(svg, c2[0] + 30, c2[1] - 16, c2[0] + 70, c2[1] - 16, 's-main'); arr(svg, c2[0] + 30, c2[1] - 16, c2[0] + 30, c2[1] - 56, 's-main');
+      arr(svg, c2[0] + 2, c2[1] - 2, c2[0] + 26, c2[1] - 14, 's-pen s-thin'); T(svg, c2[0] + 8, c2[1] + 18, 'ε', 'f-pen');
+      const c3 = [50, rows[2] + 20], ra = 0.5;
+      arr(svg, c3[0], c3[1], c3[0] + 42, c3[1], 's-ax'); arr(svg, c3[0], c3[1], c3[0], c3[1] - 42, 's-ax');
+      arr(svg, c3[0], c3[1], c3[0] + 42 * Math.cos(ra), c3[1] - 42 * Math.sin(ra), 's-main'); arr(svg, c3[0], c3[1], c3[0] - 42 * Math.sin(ra), c3[1] - 42 * Math.cos(ra), 's-main');
+      S('path', { d: `M ${c3[0] + 30} ${c3[1]} A 30 30 0 0 0 ${c3[0] + 30 * Math.cos(ra)} ${c3[1] - 30 * Math.sin(ra)}`, class: 's-pen s-thin' }, svg);
+      T(svg, c3[0] + 34, c3[1] - 4, 'φ', 'f-pen');
+      const left = [['однородность времени', 'сдвиг начала отсчёта времени t → t + τ'], ['однородность пространства', 'перенос всей системы r → r + ε'], ['изотропия пространства', 'поворот всей системы как целого']];
+      const right = ['W = const', 'p = const', 'L = const'], rl = ['энергия', 'импульс', 'момент импульса'];
+      rows.forEach((y, i) => {
+        T(svg, 130, y - 4, left[i][0]); T(svg, 130, y + 16, left[i][1], 't-small');
+        arr(svg, 400, y, 450, y, 's-main');
+        T(svg, 462, y - 2, right[i], 'f-accent'); T(svg, 462, y + 18, rl[i], 't-small');
+      });
+    }
+  });
+
+  /* §22 нагреваемая пружина */
+  addFig('p22', {
+    tag: 'Поиграй', vb: '0 0 560 300', label: 'Полная энергия пружинного маятника при постоянной и меняющейся жёсткости', readout: true,
+    controls: ctl(slider('f22-r', 'Скорость нагрева', 0, 0.12, 0.005, 0.05)),
+    cap: String.raw`Синий пунктир — обычная пружина: $U=kx^2/2$ не зависит от $t$ явно, время однородно, $W=\mathrm{const}$. Красная линия — пружину греют, жёсткость $k(t)$ падает (серая кривая). Тогда $\partial U/\partial t\ne0$, система незамкнута, и $W$ меняется: $d(K+U)=\frac{\partial U}{\partial t}dt$.`,
+    build(svg, f, out) {
+      const X = lin(0, 30, 50, 540), Y = lin(0, 1.1, 270, 20);
+      S('line', { x1: 50, y1: 270, x2: 548, y2: 270, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      S('line', { x1: 50, y1: 280, x2: 50, y2: 14, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      T(svg, 540, 262, 't', 't-small', 'end');
+      S('line', { x1: 50, y1: Y(0.5), x2: 540, y2: Y(0.5), class: 's-main s-dash' }, svg);
+      T(svg, 536, Y(0.5) - 8, 'W без нагрева', 'f-accent', 'end');
+      const g = S('g', {}, svg);
+      onInput(f, ['f22-r'], () => {
+        const rate = val(f, 'f22-r'); show(f, 'f22-r', num(rate, 3)); clear(g);
+        const k = t => 1 / (1 + rate * t);
+        let x = 1, v = 0; const dt = 0.01, W = [], Kc = [];
+        for (let i = 0; i <= 3000; i++) {
+          const t = i * dt;
+          if (i % 5 === 0) { W.push([t, v * v / 2 + k(t) * x * x / 2]); Kc.push([t, k(t)]); }
+          const a = (tt, xx) => -k(tt) * xx;
+          const k1x = v, k1v = a(t, x), k2x = v + dt / 2 * k1v, k2v = a(t + dt / 2, x + dt / 2 * k1x);
+          const k3x = v + dt / 2 * k2v, k3v = a(t + dt / 2, x + dt / 2 * k2x), k4x = v + dt * k3v, k4v = a(t + dt, x + dt * k3x);
+          x += dt / 6 * (k1x + 2 * k2x + 2 * k3x + k4x); v += dt / 6 * (k1v + 2 * k2v + 2 * k3v + k4v);
+        }
+        plotLine(g, Kc, X, Y, 's-ax s-thin', 0, 1.1); T(g, X(29), Y(Kc[Kc.length - 1][1]) - 8, 'k(t)', 't-small', 'end');
+        plotLine(g, W, X, Y, 's-pen', 0, 1.1); T(g, X(29), Y(W[W.length - 1][1]) + 18, 'W с нагревом', 'f-pen', 'end');
+        const We = W[W.length - 1][1];
+        out.textContent = rate === 0
+          ? 'k = const: ∂U/∂t = 0, время однородно, W = const.'
+          : `∂U/∂t = (dk/dt)·x²/2 ≠ 0: за 30 с полная энергия изменилась с 0,50 до ${num(We, 2)}.`;
+      });
+    }
+  });
+
+  /* §23, §24 система трёх тел на пружинах */
+  function threeBodies(pid, mode) {
+    const rot = mode === 'rot';
+    addFig(pid, {
+      tag: 'Поиграй', vb: '0 0 560 320', readout: true,
+      label: rot ? 'Поворот системы трёх тел как целого' : 'Перенос системы трёх тел как целого',
+      controls: ctl(rot ? slider(pid + '-s', 'Поворот φ', -90, 90, 1, 35) : slider(pid + '-s', 'Сдвиг ε', -1, 1, 0.02, 0.6)),
+      cap: rot
+        ? String.raw`Три тела на пружинах. Поверни всю систему: расстояния между телами не меняются, поэтому $U$ та же и $dU=0$ (изотропия). Из этого получается, что суммарный момент внутренних сил $\sum\vec r_n\times\vec F_n=0$, а значит $\vec L=\mathrm{const}$.`
+        : String.raw`Три тела на пружинах. Сдвинь всю систему на $\vec\varepsilon$: расстояния не меняются, $U$ та же, $dU=0$ (однородность пространства). Красные стрелки — силы пружин. Их сумма всегда ноль, поэтому $\frac{d}{dt}\sum m_n\vec v_n=0$ и $\vec p=\mathrm{const}$. Ровно этот вывод автор оставил «самим».`,
+      build(svg, f, out) {
+        const s = 90, C = [280, 170], X = x => C[0] + x * s, Y = y => C[1] - y * s;
+        const base = [[-1.2, -0.7], [1.3, -0.6], [-0.1, 1.0]], l0 = 1.6, pairs = [[0, 1], [1, 2], [2, 0]];
+        const Uof = ps => pairs.reduce((a, q) => a + 0.5 * (Math.hypot(ps[q[0]][0] - ps[q[1]][0], ps[q[0]][1] - ps[q[1]][1]) - l0) ** 2, 0);
+        const ghost = base.map(p => [X(p[0]), Y(p[1])]);
+        S('polygon', { points: P(ghost), class: 'f-none s-ax s-dash' }, svg);
+        ghost.forEach(p => S('circle', { cx: p[0], cy: p[1], r: 7, class: 'f-none s-ax' }, svg));
+        if (rot) { S('circle', { cx: C[0], cy: C[1], r: 4, class: 'f-muted' }, svg); T(svg, C[0] + 8, C[1] + 16, 'O', 't-small'); }
+        const g = S('g', {}, svg), U0 = Uof(base);
+        onInput(f, [pid + '-s'], () => {
+          const v = val(f, pid + '-s'); clear(g);
+          let ps;
+          if (rot) { show(f, pid + '-s', v + '°'); const a = v * Math.PI / 180; ps = base.map(p => [p[0] * Math.cos(a) - p[1] * Math.sin(a), p[0] * Math.sin(a) + p[1] * Math.cos(a)]); }
+          else { show(f, pid + '-s', num(v, 2)); ps = base.map(p => [p[0] + v, p[1] + 0.4 * v]); }
+          const F = ps.map(() => [0, 0]);
+          pairs.forEach(q => {
+            const a = ps[q[0]], b = ps[q[1]], d = Math.hypot(b[0] - a[0], b[1] - a[1]), t = d - l0, u = [(b[0] - a[0]) / d, (b[1] - a[1]) / d];
+            F[q[0]][0] += t * u[0]; F[q[0]][1] += t * u[1]; F[q[1]][0] -= t * u[0]; F[q[1]][1] -= t * u[1];
+            S('line', { x1: X(a[0]), y1: Y(a[1]), x2: X(b[0]), y2: Y(b[1]), class: 's-main', 'stroke-dasharray': '2 4' }, g);
+          });
+          ps.forEach((p, i) => { arr(g, X(p[0]), Y(p[1]), X(p[0] + F[i][0] * 0.8), Y(p[1] + F[i][1] * 0.8), 's-pen'); S('circle', { cx: X(p[0]), cy: Y(p[1]), r: 8, class: 'f-ink' }, g); });
+          if (!rot) arr(g, ghost[2][0], ghost[2][1], X(ps[2][0]), Y(ps[2][1]), 's-ax s-thin');
+          const sum = F.reduce((a, b) => [a[0] + b[0], a[1] + b[1]], [0, 0]);
+          const mom = ps.reduce((a, p, i) => a + p[0] * F[i][1] - p[1] * F[i][0], 0);
+          out.textContent = `U = ${num(Uof(ps), 3)} (до: ${num(U0, 3)}). ` + (rot
+            ? `Суммарный момент сил Σ r×F = ${num(mom, 3)}.`
+            : `Сумма сил ΣF = (${num(sum[0], 3)}; ${num(sum[1], 3)}).`);
+        });
+      }
+    });
+  }
+  threeBodies('p23', 'shift');
+  threeBodies('p24', 'rot');
+
+  /* §25 поле тяготения точечной массы */
+  addFig('p25', {
+    tag: 'Схема', vb: '0 0 600 290', label: 'Поле тяготения точечной массы и график потенциала',
+    cap: String.raw`Слева напряжённость $\vec g=-GM\vec r/r^3$: стрелки смотрят к массе и быстро слабеют, как $1/r^2$. Пунктир — линии $\varphi=\mathrm{const}$. Справа потенциал $\varphi=-GM/r$: яма, на бесконечности ноль. Напряжённость — минус наклон этого графика: $\vec g=-\nabla\varphi$. Чем ближе к массе, тем круче наклон и сильнее поле.`,
+    build(svg) {
+      const C = [150, 145];
+      [50, 90, 130].forEach(r => {
+        S('circle', { cx: C[0], cy: C[1], r, class: 's-ax s-dash' }, svg);
+        const L = Math.max(7, 9000 / (r * r) * 0.9);
+        for (let k = 0; k < 12; k++) { const a = k * Math.PI / 6 + (r === 90 ? Math.PI / 12 : 0), u = [Math.cos(a), -Math.sin(a)]; arr(svg, C[0] + u[0] * r, C[1] + u[1] * r, C[0] + u[0] * (r - L), C[1] + u[1] * (r - L), 's-main s-thin'); }
+      });
+      S('circle', { cx: C[0], cy: C[1], r: 12, class: 'f-sun' }, svg); T(svg, C[0] + 16, C[1] + 5, 'M', '');
+      const X = lin(0, 6, 340, 585), Y = lin(-3.2, 0.3, 270, 20);
+      S('line', { x1: 340, y1: Y(0), x2: 592, y2: Y(0), class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      S('line', { x1: 340, y1: 280, x2: 340, y2: 14, class: 's-ax', 'marker-end': 'url(#ah-muted)' }, svg);
+      T(svg, 586, Y(0) - 8, 'r', 't-small', 'end'); T(svg, 348, 22, 'φ', 't-small');
+      const c = []; for (let r = 0.25; r <= 6; r += 0.02) c.push([r, -1 / r]);
+      plotLine(svg, c, X, Y, 's-main', -3.2, 0.3);
+      T(svg, X(5.8), Y(-1 / 5.8) + 20, 'φ = −GM/r', 'f-accent', 'end');
+      const r0 = 1.2, k = 1 / (r0 * r0);
+      S('line', { x1: X(r0 - 0.7), y1: Y(-1 / r0 - 0.7 * k), x2: X(r0 + 0.7), y2: Y(-1 / r0 + 0.7 * k), class: 's-pen s-thin s-dash' }, svg);
+      S('circle', { cx: X(r0), cy: Y(-1 / r0), r: 4, class: 'f-pen' }, svg);
+      T(svg, X(r0) + 10, Y(-1 / r0) + 22, 'наклон = |g|', 'f-pen');
+    }
+  });
+})();
+</script>
+</body>
+</html>
